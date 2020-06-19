@@ -14,3 +14,7 @@ Logger &Logger::instance() {
 void Logger::log(const std::string& log) {
     std::cout << log << std::endl;
 }
+
+void Logger::log(const std::string &module, const std::string &log) {
+    std::cout << "[" << module << "]: " << log << std::endl;
+}
