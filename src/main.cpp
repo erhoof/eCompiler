@@ -4,8 +4,10 @@
 
 #include <iostream>
 
+#include "../include/IO/Logger.h"
+
 int main() {
-    std::cout << "Hello!";
+    Logger::instance().log("eCompiler started.");
 
     return 0;
 }
