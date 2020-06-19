@@ -5,9 +5,12 @@
 #include <iostream>
 
 #include "../include/IO/Logger.h"
+#include "../include/Core/Core.h"
 
-int main() {
+int main(int argc, char* argv[]) {
     Logger::instance().log("eCompiler started.");
+
+    Core::instance().loadFile("../data/main.ts");
 
     return 0;
 }

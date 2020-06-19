@@ -13,4 +13,4 @@ file(GLOB SRC_FILES
 
 include_directories(${INCLUDE_DIRECTORIES})
 
-add_executable(eCompiler ${SRC_FILES} include/IO/Logger.h src/IO/Logger.cpp)
+add_executable(eCompiler ${SRC_FILES} include/IO/Logger.h src/IO/Logger.cpp include/Core/Core.h src/Core/Core.cpp)
