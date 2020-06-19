@@ -1,0 +1,1 @@
+pos = initial + rate * 60;
