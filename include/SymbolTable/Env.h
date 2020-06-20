@@ -7,19 +7,20 @@
 
 #include <unordered_map>
 #include "../Lexer/Token.h"
+#include "../Interpreter/Id.h"
 
 // TODO: REDO WITH IDS!!!
 
 class Env {
     explicit Env(Env* prev);
-    void put(Token *token, int id);
-    int get(Token &token);
+    void put(Token* token, Id* id);
+    Id* get(Token& token);
 
 protected:
     Env* m_prev;
 
 private:
-    std::unordered_map<Token*, int> m_table;
+    std::unordered_map<Token*, Id*> m_table;
 };
 
 #endif //ECOMPILER_ENV_H
