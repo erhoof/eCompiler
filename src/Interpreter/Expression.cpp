@@ -17,18 +17,18 @@ Expression* Expression::reduce() {
     return this;
 }
 
-void Expression::jumping(int to, int from) {
-    emitJumps(toString(), to, from);
+void Expression::jumping(int t, int f) {
+    emitJumps(toString(), t, f);
 }
 
-void Expression::emitJumps(std::string test, int to, int from) {
-    if (to != 0 && from != 0) {
-        emit("if " + test + " goto L" + std::to_string(to));
-        emit("goto L" + std::to_string(from));
-    } else if (to != 0) {
-        emit ("if " + test + " goto L" + std::to_string(to));
-    } else if (from != 0) {
-        emit("iffalse " + test + " goto L" + std::to_string(from));
+void Expression::emitJumps(std::string test, int t, int f) {
+    if (t != 0 && f != 0) {
+        emit("if " + test + " goto L" + std::to_string(t));
+        emit("goto L" + std::to_string(f));
+    } else if (t != 0) {
+        emit ("if " + test + " goto L" + std::to_string(t));
+    } else if (f != 0) {
+        emit("iffalse " + test + " goto L" + std::to_string(f));
     }
 }
 
