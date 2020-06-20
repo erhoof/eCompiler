@@ -11,6 +11,8 @@
 #include "../../include/Lexer/Real.h"
 #include "../../include/SymbolTable/TypeTable.h"
 
+int Lexer::m_line = 1;
+
 Lexer::Lexer() {
     Logger::instance().log("Lexer", "initializing lexer...");
     // Keywords
@@ -31,7 +33,7 @@ Lexer::Lexer() {
     reserve(*TypeTable::instance().t_char);
 }
 
-int Lexer::line() const {
+int Lexer::line(){
     return m_line;
 }
 

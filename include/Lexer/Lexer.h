@@ -14,12 +14,12 @@ public:
 
     Token* scan();
 
-    int line() const;
+    static int line();
     char peek() const;
     const std::unordered_map<std::string, Word*> &words() const;
 
 private:
-    int m_line = 1;
+    static int m_line;
     char m_peek = ' ';
     std::unordered_map<std::string, Word*> m_words;
 
