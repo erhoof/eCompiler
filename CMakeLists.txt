@@ -4,10 +4,18 @@ project(eCompiler)
 set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB INCLUDE_FILES
+    "include/Core/*.h"
+    "include/IO/*.h"
+    "include/Lexer/*.h"
+    "src/SymbolTable/*.h"
     "include/*.hpp"
 )
 
 file(GLOB SRC_FILES
+    "src/Core/*.cpp"
+    "src/IO/*.cpp"
+    "src/Lexer/*.cpp"
+    "src/SymbolTable/*.cpp"
     "src/*.cpp"
 )
 

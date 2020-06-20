@@ -18,7 +18,7 @@ int Type::width() const {
 bool Type::numeric(Type& p) {
     return (p == *(TypeTable::instance().t_char) ||
             p == *(TypeTable::instance().t_int) ||
-            p == *(TypeTable::instance().t_float))
+            p == *(TypeTable::instance().t_float));
 }
 
 Type* Type::max(Type& p1, Type& p2) {
@@ -35,5 +35,5 @@ Type* Type::max(Type& p1, Type& p2) {
 }
 
 bool Type::operator==(const Type& cmp) const {
-    return (this->lexeme() == cmp.lexeme())
+    return (this->lexeme() == cmp.lexeme());
 }

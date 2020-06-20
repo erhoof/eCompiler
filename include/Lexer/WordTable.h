@@ -5,6 +5,8 @@
 #ifndef ECOMPILER_WORDTABLE_H
 #define ECOMPILER_WORDTABLE_H
 
+#include "Word.h"
+
 class WordTable {
 public:
     static WordTable& instance();
