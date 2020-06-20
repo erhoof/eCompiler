@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include "../Lexer/Token.h"
 
+// TODO: REDO WITH IDS!!!
+
 class Env {
     explicit Env(Env* prev);
     void put(Token *token, int id);
