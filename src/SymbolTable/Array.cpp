@@ -12,6 +12,8 @@ Array::Array(int size, Type& type) : Type("[]", Tag::INDEX, size*(type.width()))
 
 std::string Array::toString() {
     std::string out = "[" + std::to_string(m_size) + "] " + m_type->toString();
+
+    return out;
 }
 
 Type* Array::type() const {

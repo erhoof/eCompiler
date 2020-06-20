@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB INCLUDE_FILES
     "include/Core/*.h"
+    "src/Interpreter/*.h"
     "include/IO/*.h"
     "include/Lexer/*.h"
     "src/SymbolTable/*.h"
@@ -13,6 +14,7 @@ file(GLOB INCLUDE_FILES
 
 file(GLOB SRC_FILES
     "src/Core/*.cpp"
+    "src/Interpreter/*.cpp"
     "src/IO/*.cpp"
     "src/Lexer/*.cpp"
     "src/SymbolTable/*.cpp"
