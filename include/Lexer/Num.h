@@ -12,7 +12,7 @@ public:
     explicit Num(int value);
 
     std::string toString() const;
-    int value() int;
+    int value();
 
 private:
     int m_value;
