@@ -15,11 +15,12 @@ public:
     void emitLabel(int i);
     void emit(std::string str);
 
+protected:
+    void error(std::string str) const;
+
 private:
     int m_lexerLine = 0;
     static int m_labels;
-
-    void error(std::string str) const;
 };
 
 #endif //ECOMPILER_NODE_H

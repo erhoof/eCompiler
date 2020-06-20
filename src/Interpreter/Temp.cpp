@@ -5,6 +5,8 @@
 #include "../../include/Interpreter/Temp.h"
 #include "../../include/Lexer/WordTable.h"
 
+int Temp::m_count = 0;
+
 Temp::Temp(Type& type) : Expression(*WordTable::instance().w_temp, type) {
     m_number = ++m_count;
 }

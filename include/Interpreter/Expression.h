@@ -23,8 +23,10 @@ public:
 
     std::string toString();
 
-private:
+protected:
     Type* m_type;
+
+private:
     Token* m_operand;
 };
 
