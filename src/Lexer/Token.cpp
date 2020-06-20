@@ -14,3 +14,7 @@ std::string Token::toString() const {
     return out;
 }
 
+int Token::tag() const {
+    return m_tag;
+}
+

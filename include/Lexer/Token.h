@@ -12,6 +12,7 @@ public:
     explicit Token(int tag);
 
     std::string toString() const;
+    int tag() const;
 
 private:
     int m_tag;

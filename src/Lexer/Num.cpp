@@ -13,3 +13,7 @@ Num::Num(int value) : Token(Tag::NUM) {
 std::string Num::toString() const {
     return std::to_string(m_value);
 }
+
+int Num::value() {
+    return m_value;
+}
