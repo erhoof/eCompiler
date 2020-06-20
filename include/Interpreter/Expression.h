@@ -18,6 +18,9 @@ public:
     void jumping(int to, int from);
     void emitJumps(std::string test, int to, int from);
 
+    Type& type() const;
+    Token& operand() const;
+
     std::string toString();
 
 private:

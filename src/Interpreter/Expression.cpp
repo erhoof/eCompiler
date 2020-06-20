@@ -36,3 +36,11 @@ std::string Expression::toString() {
     return m_operand->toString();
 }
 
+Type& Expression::type() const {
+    return *m_type;
+}
+
+Token& Expression::operand() const {
+    return *m_operand;
+}
+
