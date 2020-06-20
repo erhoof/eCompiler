@@ -11,6 +11,7 @@ int main(int argc, char* argv[]) {
     Logger::instance().log("eCompiler started.");
 
     Core::instance().loadFile("../data/main.ts");
+    Core::instance().process();
 
     return 0;
 }
