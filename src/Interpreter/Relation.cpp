@@ -22,5 +22,10 @@ Type* Relation::check(Type& p1, Type& p2) {
 }
 
 void Relation::jumping(int t, int f) {
-    Expression::jumping(t, f);
+    auto a = expr1()->reduce();
+    auto b = expr2()->reduce();
+
+    std::string test = a->toString() + " " + operand().toString() + " " + b->toString();
+
+    emitJumps(test, t, f);
 }
