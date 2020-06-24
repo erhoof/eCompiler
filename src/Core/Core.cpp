@@ -4,6 +4,7 @@
 
 #include "../../include/Core/Core.h"
 #include "../../include/IO/Logger.h"
+#include "../../include/Lexer/Lexer.h"
 
 #include <fstream>
 #include <streambuf>
@@ -41,9 +42,20 @@ const std::string &Core::inputFile() {
     return *m_inputFile;
 }
 
+char Core::nextChar() {
+    char ch = m_inputFile->c_str()[m_charNumb];
+    m_charNumb++;
+
+    return ch;
+}
+
 void Core::dumpCore(const std::string &reason) {
     Logger::instance().log("\nFATAL ERROR: " + reason);
     Logger::instance().log("dumping the core...");
 
     std::exit(1);
+}
+
+void Core::process() {
+    auto lexer = new Lexer();
 }

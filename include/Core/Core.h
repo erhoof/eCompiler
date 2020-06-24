@@ -13,6 +13,9 @@ public:
 
     int loadFile(const std::string& filename);
     const std::string &inputFile();
+    char nextChar();
+
+    void process();
 
     void dumpCore(const std::string& reason);
 
@@ -22,6 +25,7 @@ private:
     Core() = default;
 
     std::string* m_inputFile;
+    int m_charNumb = 0;
 };
 
 #endif //ECOMPILER_CORE_H
