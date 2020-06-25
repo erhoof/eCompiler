@@ -15,7 +15,6 @@ public:
     void emitLabel(int i);
     void emit(std::string str);
 
-protected:
     void error(std::string str) const;
 
 private:
