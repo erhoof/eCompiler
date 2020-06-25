@@ -19,6 +19,8 @@ Type* Relation::check(Type& p1, Type& p2) {
 
     if (p2 == p1)
         return TypeTable::instance().t_bool;
+
+    return nullptr;
 }
 
 void Relation::jumping(int t, int f) {
