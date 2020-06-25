@@ -18,3 +18,9 @@ void Logger::log(const std::string& log) {
 void Logger::log(const std::string &module, const std::string &log) {
     std::cout << "[" << module << "]: " << log << std::endl;
 }
+
+std::string Logger::string(char c) {
+    std::string str(1, c);
+
+    return str;
+}
