@@ -3,8 +3,11 @@
 //
 
 #include "../../include/Lexer/Token.h"
+#include "../../include/IO/Logger.h"
 
 Token::Token(int tag) {
+    Logger::instance().log("Lexer", "new token: " + Logger::string(tag));
+
     m_tag = tag;
 }
 
