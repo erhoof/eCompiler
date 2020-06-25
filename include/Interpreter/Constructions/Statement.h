@@ -17,8 +17,9 @@ public:
     static Statement* Enclosing;
 
     int after() const;
+    int setAfter(int after);
 
-private:
+protected:
     int m_after = 0;
 };
 

@@ -11,4 +11,8 @@ int Statement::after() const {
     return m_after;
 }
 
+int Statement::setAfter(int after) {
+    m_after = after;
+}
+
 void Statement::gen(int b, int a) {}
