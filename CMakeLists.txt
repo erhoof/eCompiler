@@ -25,4 +25,4 @@ file(GLOB SRC_FILES
 
 include_directories(${INCLUDE_DIRECTORIES})
 
-add_executable(eCompiler ${SRC_FILES} include/Interpreter/Constructions/Statement.h src/Interpreter/Constructions/Statement.cpp include/Interpreter/Constructions/If.h src/Interpreter/Constructions/If.cpp)
+add_executable(eCompiler ${SRC_FILES} include/Interpreter/Constructions/Statement.h src/Interpreter/Constructions/Statement.cpp include/Interpreter/Constructions/If.h src/Interpreter/Constructions/If.cpp include/Interpreter/Constructions/Else.h src/Interpreter/Constructions/Else.cpp include/Interpreter/Constructions/While.h src/Interpreter/Constructions/While.cpp)
