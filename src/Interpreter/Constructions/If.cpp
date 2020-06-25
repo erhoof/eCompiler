@@ -20,3 +20,11 @@ void If::gen(int b, int a) {
     emitLabel(label);
     m_stmt->gen(label, a);
 }
+
+Expression* If::expr() {
+    return m_expr;
+}
+
+Statement* If::stmt() {
+    return m_stmt;
+}

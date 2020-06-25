@@ -14,6 +14,9 @@ public:
 
     void gen(int b, int a);
 
+    Expression* expr();
+    Statement* stmt();
+
 private:
     Expression* m_expr;
     Statement* m_stmt;
