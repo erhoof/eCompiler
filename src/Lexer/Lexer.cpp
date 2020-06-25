@@ -47,6 +47,7 @@ const std::unordered_map<std::string, Word*> &Lexer::words() const {
 
 void Lexer::reserve(Word& word) {
     m_words.insert(std::pair<std::string, Word*>(word.lexeme(), &word));
+
     Logger::instance().log("Lexer", "reserving word - " + word.lexeme());
 }
 
@@ -65,6 +66,8 @@ bool Lexer::readChar(char c) {
 }
 
 Token* Lexer::scan() {
+    Logger::instance().log("Lexer", "scan func called");
+
     for ( ;; readChar()) {
         if (m_peek == ' ' || m_peek == '\t')
             continue;
