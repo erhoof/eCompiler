@@ -5,14 +5,13 @@
 #include "../../include/Core/Core.h"
 #include "../../include/IO/Logger.h"
 #include "../../include/Lexer/Lexer.h"
+#include "../../include/Parser/Parser.h"
 
 #include <fstream>
 #include <streambuf>
 
 Core &Core::instance() {
     static Core core;
-
-    Logger::instance().log("Core", "created instance.");
 
     return core;
 }
@@ -46,6 +45,8 @@ char Core::nextChar() {
     char ch = m_inputFile->c_str()[m_charNumb];
     m_charNumb++;
 
+    Logger::instance().log("Core", "nextChar: " + Logger::string(ch));
+
     return ch;
 }
 
@@ -58,4 +59,5 @@ void Core::dumpCore(const std::string &reason) {
 
 void Core::process() {
     auto lexer = new Lexer();
+    auto parser = new Parser(lexer);
 }
