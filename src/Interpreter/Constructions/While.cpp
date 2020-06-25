@@ -23,7 +23,7 @@ void While::gen(int b, int a) {
 
     expr()->jumping(0, a);
 
-    int label = newLabel(); // statement
+    int label = newLabel(); // stmt
     emitLabel(label);
     stmt()->gen(label, b);
     emit("goto L" + std::to_string(b));
