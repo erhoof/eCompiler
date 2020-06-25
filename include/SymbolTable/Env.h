@@ -12,6 +12,7 @@
 // TODO: REDO WITH IDS!!!
 
 class Env {
+public:
     explicit Env(Env* prev);
     void put(Token* token, Id* id);
     Id* get(Token& token);
