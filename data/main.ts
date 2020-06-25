@@ -1,1 +1,4 @@
-pos = initial + rate * 60;
+{
+    int i;
+    int j;
+}
