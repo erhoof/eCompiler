@@ -7,7 +7,7 @@
 
 int Temp::m_count = 0;
 
-Temp::Temp(Type& type) : Expression(*WordTable::instance().w_temp, type) {
+Temp::Temp(Type* type) : Expression(WordTable::instance().w_temp, type) {
     m_number = ++m_count;
 }
 

@@ -60,4 +60,5 @@ void Core::dumpCore(const std::string &reason) {
 void Core::process() {
     auto lexer = new Lexer();
     auto parser = new Parser(lexer);
+    parser->program();
 }

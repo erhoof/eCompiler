@@ -9,8 +9,8 @@
 
 class Operand : public Expression {
 public:
-    Operand(Token& token, Type& type);
-    Expression& reduce();
+    Operand(Token* token, Type* type);
+    Expression* reduce();
 };
 
 #endif //ECOMPILER_OPERAND_H

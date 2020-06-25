@@ -10,7 +10,7 @@ Else::Else(Expression *x, Statement *s1, Statement *s2) {
     m_stmt1 = s1;
     m_stmt2 = s2;
 
-    if (&expr()->type() == TypeTable::instance().t_bool)
+    if (expr()->type() == TypeTable::instance().t_bool)
         expr()->error("if expression should have bool expr in it");
 }
 

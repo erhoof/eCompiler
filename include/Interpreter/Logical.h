@@ -9,9 +9,9 @@
 
 class Logical : public Expression {
 public:
-    Logical(Token& token, Expression* x1, Expression* x2);
+    Logical(Token* token, Expression* x1, Expression* x2);
 
-    Type* check(Type& p1, Type& p2) const;
+    Type* check(Type* p1, Type* p2) const;
     Expression* gen();
 
     std::string toString() const;

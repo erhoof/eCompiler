@@ -9,7 +9,7 @@ If::If(Expression* x, Statement* s) {
     m_expr = x;
     m_stmt = s;
 
-    if (&m_expr->type() != TypeTable::instance().t_bool)
+    if (m_expr->type() != TypeTable::instance().t_bool)
         m_expr->error("if expression should have bool expr in it");
 }
 

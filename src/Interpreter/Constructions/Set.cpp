@@ -9,12 +9,12 @@ Set::Set(Id *id, Expression *x) {
     m_id = id;
     m_expr = x;
 
-    if (check(&id->type(), &m_expr->type()) == nullptr)
+    if (check(id->type(), m_expr->type()) == nullptr)
         error("type definition error");
 }
 
 Type* Set::check(Type *t1, Type *t2) {
-    if (Type::numeric(*t1) && Type::numeric(*t2))
+    if (Type::numeric(t1) && Type::numeric(t2))
         return t2;
     else if (t1 == TypeTable::instance().t_bool &&
              t2 == TypeTable::instance().t_bool)

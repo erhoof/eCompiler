@@ -7,6 +7,29 @@
 
 class Tag {
 public:
+    enum Constants {
+        C_AND    = 256,
+        C_ELSE   = 260,
+        C_ID     = 264,
+        C_MINUS  = 268,
+        C_REAL   = 272,
+        C_BASIC  = 257,
+        C_EQ     = 261,
+        C_IF     = 265,
+        C_NE     = 269,
+        C_TEMP   = 273,
+        C_BREAK  = 258,
+        C_FALSE  = 262,
+        C_INDEX  = 266,
+        C_NUM    = 270,
+        C_TRUE   = 274,
+        C_DO     = 259,
+        C_GE     = 263,
+        C_LE     = 267,
+        C_OR     = 271,
+        C_WHILE  = 275
+    };
+
     static int
         AND,
         ELSE,

@@ -18,11 +18,11 @@ int Node::newLabel() {
 }
 
 void Node::emitLabel(int i) {
-    Logger::instance().log("Logger", "L" + std::to_string(i) + ":");
+    Logger::instance().log("OUT", "L" + std::to_string(i) + ":");
 }
 
 void Node::emit(std::string str) {
-    Logger::instance().log("Logger", "\t" + str);
+    Logger::instance().log("OUT", "\t" + str);
 }
 
 void Node::error(std::string str) const {

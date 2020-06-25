@@ -13,6 +13,6 @@ ConstantTable &ConstantTable::instance() {
 }
 
 ConstantTable::ConstantTable() {
-    c_true = new Constant(*WordTable::instance().w_true, *TypeTable::instance().t_bool);
-    c_false = new Constant(*WordTable::instance().w_false, *TypeTable::instance().t_bool);
+    c_true = new Constant(WordTable::instance().w_true, TypeTable::instance().t_bool);
+    c_false = new Constant(WordTable::instance().w_false, TypeTable::instance().t_bool);
 }

@@ -15,20 +15,20 @@ int Type::width() const {
     return m_width;
 }
 
-bool Type::numeric(Type& p) {
-    return (p == *(TypeTable::instance().t_char) ||
-            p == *(TypeTable::instance().t_int) ||
-            p == *(TypeTable::instance().t_float));
+bool Type::numeric(Type* p) {
+    return (p == TypeTable::instance().t_char ||
+            p == TypeTable::instance().t_int ||
+            p == TypeTable::instance().t_float);
 }
 
-Type* Type::max(Type& p1, Type& p2) {
+Type* Type::max(Type* p1, Type* p2) {
     if (!numeric(p1) || !numeric(p2))
         return nullptr;
-    else if (p1 == *(TypeTable::instance().t_float) ||
-             p2 == *(TypeTable::instance().t_float))
+    else if (p1 == TypeTable::instance().t_float ||
+             p2 == TypeTable::instance().t_float)
         return TypeTable::instance().t_float;
-    else if (p1 == *(TypeTable::instance().t_int) ||
-             p2 == *(TypeTable::instance().t_int))
+    else if (p1 == TypeTable::instance().t_int ||
+             p2 == TypeTable::instance().t_int)
         return TypeTable::instance().t_int;
     else
         return TypeTable::instance().t_char;

@@ -14,7 +14,7 @@ void Do::init(Statement *s, Expression *x) {
     m_expr = x;
     m_stmt = s;
 
-    if (&expr()->type() != TypeTable::instance().t_bool)
+    if (expr()->type() != TypeTable::instance().t_bool)
         expr()->error("do expression should have bool expr in it");
 }
 

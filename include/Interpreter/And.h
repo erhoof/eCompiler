@@ -9,7 +9,7 @@
 
 class And : public Logical {
 public:
-    And(Token& token, Expression* x1, Expression* x2);
+    And(Token* token, Expression* x1, Expression* x2);
 
     void jumping(int t, int f);
 };

@@ -9,7 +9,7 @@
 
 class Or : public Logical {
 public:
-    Or(Token& token, Expression* x1, Expression* x2);
+    Or(Token* token, Expression* x1, Expression* x2);
     void jumping(int t, int f);
 };
 

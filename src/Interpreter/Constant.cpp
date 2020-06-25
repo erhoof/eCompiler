@@ -7,11 +7,11 @@
 #include "../../include/SymbolTable/TypeTable.h"
 #include "../../include/Interpreter/ConstantTable.h"
 
-Constant::Constant(Token& token, Type& type)
+Constant::Constant(Token* token, Type* type)
     : Expression(token, type) {}
 
 Constant::Constant(int i)
-    : Expression(*(new Num(i)), *TypeTable::instance().t_int) {}
+    : Expression(new Num(i), TypeTable::instance().t_int) {}
 
 void Constant::jumping(int t, int f) {
     if (this == ConstantTable::instance().c_true && t != 0)

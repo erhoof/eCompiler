@@ -9,7 +9,7 @@
 
 class Arithmetic : public Operand {
 public:
-    Arithmetic(Token& token, Expression& x1, Expression& x2);
+    Arithmetic(Token* token, Expression* x1, Expression* x2);
 
     Expression* gen();
 

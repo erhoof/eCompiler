@@ -9,7 +9,7 @@
 
 class Unary : public Operand {
 public:
-    Unary(Token& token, Expression& expr);
+    Unary(Token* token, Expression* expr);
 
     Expression* gen();
 

@@ -9,7 +9,7 @@
 
 class Id : public Expression {
 public:
-    Id(Word& id, Type& type, int offset);
+    Id(Word* id, Type* type, int offset);
 
     int offset() const;
 

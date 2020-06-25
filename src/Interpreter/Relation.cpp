@@ -7,7 +7,7 @@
 #include "../../include/SymbolTable/Array.h"
 #include "../../include/SymbolTable/TypeTable.h"
 
-Relation::Relation(Token& token, Expression* x1, Expression* x2) : Logical(token, x1, x2) {}
+Relation::Relation(Token* token, Expression* x1, Expression* x2) : Logical(token, x1, x2) {}
 
 Type* Relation::check(Type& p1, Type& p2) {
     /*if (instanceof<Array>(&p1) || instanceof<Array>(&p2))
@@ -27,7 +27,7 @@ void Relation::jumping(int t, int f) {
     auto a = expr1()->reduce();
     auto b = expr2()->reduce();
 
-    std::string test = a->toString() + " " + operand().toString() + " " + b->toString();
+    std::string test = a->toString() + " " + operand()->toString() + " " + b->toString();
 
     emitJumps(test, t, f);
 }

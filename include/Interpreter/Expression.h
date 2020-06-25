@@ -11,15 +11,15 @@
 
 class Expression : public Node {
 public:
-    Expression(Token& token, Type& type);
+    Expression(Token* token, Type* type);
 
     Expression* gen();
     Expression* reduce();
     void jumping(int t, int f);
     void emitJumps(std::string test, int t, int f);
 
-    Type& type() const;
-    Token& operand() const;
+    Type* type() const;
+    Token* operand() const;
 
     std::string toString();
 

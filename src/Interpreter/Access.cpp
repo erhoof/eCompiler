@@ -6,7 +6,7 @@
 #include "../../include/Lexer/Tag.h"
 
 Access::Access(Id* id, Expression* x, Type* type)
-    : Operand(*(new Word("[]", Tag::INDEX)), *type) {
+    : Operand(new Word("[]", Tag::INDEX), type) {
 
     m_array = id;
     m_index = x;
@@ -21,11 +21,11 @@ Expression* Access::index() const {
 }
 
 Expression* Access::gen() {
-    return new Access(m_array, m_index->reduce(), &type());
+    return new Access(m_array, m_index->reduce(), type());
 }
 
 void Access::jumping(int t, int f) {
-    emitJumps(reduce().toString(), t, f);
+    emitJumps(reduce()->toString(), t, f);
 }
 
 std::string Access::toString() {

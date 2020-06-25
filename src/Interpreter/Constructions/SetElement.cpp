@@ -9,12 +9,12 @@ SetElement::SetElement(Access* x, Expression* y) {
     m_index = x->index();
     m_expr = y;
 
-    if (check(&x->type(), &m_expr->type()) == nullptr)
+    if (check(x->type(), m_expr->type()) == nullptr)
         error("type definiton error");
 }
 
 Type* SetElement::check(Type* t1, Type* t2) {
-    if (t1 == t2 || (Type::numeric(*t1) && Type::numeric(*t2)))
+    if (t1 == t2 || (Type::numeric(t1) && Type::numeric(t2)))
         return t2;
 
     return nullptr;

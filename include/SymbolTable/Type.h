@@ -13,8 +13,8 @@ public:
 
     int width() const;
 
-    static bool numeric(Type& p);
-    static Type* max(Type& p1, Type& p2);
+    static bool numeric(Type* p);
+    static Type* max(Type* p1, Type* p2);
 
     bool operator==(const Type& cmp) const;
 

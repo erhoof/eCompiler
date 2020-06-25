@@ -9,7 +9,7 @@
 
 class Temp : public Expression {
 public:
-    explicit Temp(Type& type);
+    explicit Temp(Type* type);
     std::string toString() const;
 
 private:

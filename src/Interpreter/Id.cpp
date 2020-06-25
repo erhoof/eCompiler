@@ -4,7 +4,7 @@
 
 #include "../../include/Interpreter/Id.h"
 
-Id::Id(Word& id, Type& type, int offset) : Expression(id, type) {
+Id::Id(Word* id, Type* type, int offset) : Expression(id, type) {
     m_offset = offset;
 }
 

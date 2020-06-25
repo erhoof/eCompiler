@@ -4,9 +4,9 @@
 
 #include "../../include/Interpreter/Expression.h"
 
-Expression::Expression(Token& token, Type& type) {
-    m_operand = &token;
-    m_type = &type;
+Expression::Expression(Token* token, Type* type) {
+    m_operand = token;
+    m_type = type;
 }
 
 Expression* Expression::gen() {
@@ -36,11 +36,11 @@ std::string Expression::toString() {
     return m_operand->toString();
 }
 
-Type& Expression::type() const {
-    return *m_type;
+Type* Expression::type() const {
+    return m_type;
 }
 
-Token& Expression::operand() const {
-    return *m_operand;
+Token* Expression::operand() const {
+    return m_operand;
 }
 

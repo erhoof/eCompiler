@@ -9,7 +9,7 @@
 
 class Constant : public Expression {
 public:
-    Constant(Token& token, Type& type);
+    Constant(Token* token, Type* type);
     explicit Constant(int i);
 
     void jumping(int t, int f);

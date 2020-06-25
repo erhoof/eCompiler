@@ -9,7 +9,7 @@
 
 class Not : public Logical {
 public:
-    Not(Token& token, Expression* x2);
+    Not(Token* token, Expression* x2);
 
     void jumping(int t, int f);
 
