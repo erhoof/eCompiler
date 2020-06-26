@@ -32,7 +32,8 @@ public:
         TEMP,
         NOT,
         AND,
-        OR
+        OR,
+        UNARY
     };
 
     ObjTypes m_objType = EXPRESSION;

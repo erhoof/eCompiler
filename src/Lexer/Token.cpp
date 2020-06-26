@@ -44,6 +44,9 @@ std::string Token::toString() {
         case 259:
             out = "do";
             break;
+        case 268:
+            out = "-";
+            break;
         case 258:
             out = "break";
             break;

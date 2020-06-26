@@ -312,7 +312,9 @@ Expression* Parser::term() {
 Expression* Parser::unary() {
     if (m_look->tag() == '-') {
         move();
-        return new Unary(WordTable::instance().w_minus, unary());
+        Expression* ex = new Unary(WordTable::instance().w_minus, unary());
+        ex->m_objType = Expression::UNARY;
+        return ex;
     } else if (m_look->tag() == '!') {
         auto token = m_look;
         move();

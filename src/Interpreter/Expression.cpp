@@ -7,6 +7,7 @@
 #include "../../include/Interpreter/Temp.h"
 #include "../../include/Interpreter/Logical.h"
 #include "../../include/Interpreter/Relation.h"
+#include "../../include/Interpreter/Unary.h"
 
 #include <iostream>
 
@@ -19,6 +20,8 @@ Expression* Expression::gen() {
     switch(m_objType) {
         case ARITHMETIC:
             return dynamic_cast<Arithmetic*>(this)->gen();
+        case UNARY:
+            return dynamic_cast<Unary*>(this)->gen();
         default:
             return this;
     }
@@ -66,6 +69,9 @@ std::string Expression::toString() {
             break;
         case ObjTypes::LOGICAL:
             out = dynamic_cast<Logical*>(this)->toString();
+            break;
+        case ObjTypes::UNARY:
+            out = dynamic_cast<Unary*>(this)->toString();
             break;
         default:
             out = m_operand->toString();

@@ -16,11 +16,15 @@ Unary::Unary(Token* token, Expression* expr)
 }
 
 Expression* Unary::gen() {
-    return new Unary(operand(), expr()->reduce());
+    Expression* ex = new Unary(operand(), expr()->reduce());
+    ex->m_objType = UNARY;
+    return ex;
 }
 
 std::string Unary::toString() {
-    return Expression::toString();
+    std::string out = operand()->toString() + " " + expr()->toString();
+
+    return out;
 }
 
 Expression* Unary::expr() const {
