@@ -384,7 +384,9 @@ Access* Parser::offset(Id* a) { // I -> [E] | [E] I
     match(']');
     type = dynamic_cast<Array*>(type)->type();
     w = new Constant(type->width());
+    w->m_objType = Expression::CONSTANT;
     t1 = new Arithmetic(new Token('*'), i, w);
+    t1->m_objType = Expression::ARITHMETIC;
     loc = t1;
 
     // Multiple array [][][]
@@ -394,8 +396,11 @@ Access* Parser::offset(Id* a) { // I -> [E] | [E] I
         match(']');
         type = dynamic_cast<Array*>(type)->type();
         w = new Constant(type->width());
+        w->m_objType = Expression::CONSTANT;
         t1 = new Arithmetic(new Token('*'), i, w);
+        t1->m_objType = Expression::ARITHMETIC;
         t2 = new Arithmetic(new Token('+'), loc, t1);
+        t2->m_objType = Expression::ARITHMETIC;
         loc = t2;
     }
 
