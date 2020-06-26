@@ -10,6 +10,7 @@ Sequence::Sequence(Statement* s1, Statement* s2) {
 }
 
 void Sequence::gen(int b, int a) {
+
     if (stmt1() == Statement::Null) {
         m_stmt2->gen(b, a);
     } else if (stmt2() == Statement::Null)

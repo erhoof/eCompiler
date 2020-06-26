@@ -66,7 +66,7 @@ bool Lexer::readChar(char c) {
 }
 
 Token* Lexer::scan() {
-    Logger::instance().log("Lexer", "scan func called");
+    //Logger::instance().log("Lexer", "scan func called");
 
     for ( ;; readChar()) {
         if (m_peek == ' ' || m_peek == '\t')
@@ -118,8 +118,10 @@ Token* Lexer::scan() {
             readChar();
         } while (isdigit(m_peek));
 
-        if (m_peek != '.')
+        if (m_peek != '.') {
+            Logger::instance().log("Lexer", "new Num - " + std::to_string(v));
             return new Num(v);
+        }
 
         float x = v;
         float d = 10;
@@ -133,6 +135,8 @@ Token* Lexer::scan() {
             x = x + (float)(m_peek - '0')/d;
             d *= 10;
         }
+
+        Logger::instance().log("Lexer", "new Real - " + std::to_string(x));
 
         return new Real(x);
     }
@@ -151,6 +155,7 @@ Token* Lexer::scan() {
         auto word = new Word(out, Tag::ID);
         m_words.insert(std::pair<std::string, Word*>(out, word));
 
+        Logger::instance().log("Lexer", "new Word - " + out);
         return word;
     }
 

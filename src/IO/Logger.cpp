@@ -3,6 +3,7 @@
 //
 
 #include "../../include/IO/Logger.h"
+#include "../../include/Core/Core.h"
 
 #include <iostream>
 
@@ -11,8 +12,16 @@ Logger &Logger::instance() {
     return logger;
 }
 
+void Logger::flog(const std::string& log) {
+    std::cout << Core::instance().filename() + ":" + log << std::endl;
+}
+
 void Logger::log(const std::string& log) {
     std::cout << log << std::endl;
+}
+
+void Logger::nlog(const std::string& log) {
+    std::cout << log;
 }
 
 void Logger::log(const std::string &module, const std::string &log) {

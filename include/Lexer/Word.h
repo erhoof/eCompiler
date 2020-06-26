@@ -12,7 +12,7 @@ public:
     Word(std::string s, int tag);
     std::string toString() const;
 
-    const std::string &lexeme() const;
+    const std::string lexeme() const;
 private:
     std::string m_lexeme;
 };

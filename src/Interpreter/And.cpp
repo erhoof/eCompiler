@@ -4,7 +4,7 @@
 
 #include "../../include/Interpreter/And.h"
 
-And::And(Token* token, Expression* x1, Expression* x2) : Logical(token, x1, x2) {}
+And::And(Token* token, Expression* x1, Expression* x2) : Logical(token, x1, x2, AND) {}
 
 void And::jumping(int t, int f) {
     int label = f != 0 ? f : newLabel();

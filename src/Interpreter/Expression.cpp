@@ -3,6 +3,12 @@
 //
 
 #include "../../include/Interpreter/Expression.h"
+#include "../../include/Interpreter/Arithmetic.h"
+#include "../../include/Interpreter/Temp.h"
+#include "../../include/Interpreter/Logical.h"
+#include "../../include/Interpreter/Relation.h"
+
+#include <iostream>
 
 Expression::Expression(Token* token, Type* type) {
     m_operand = token;
@@ -10,15 +16,31 @@ Expression::Expression(Token* token, Type* type) {
 }
 
 Expression* Expression::gen() {
-    return this;
+    switch(m_objType) {
+        case ARITHMETIC:
+            return dynamic_cast<Arithmetic*>(this)->gen();
+        default:
+            return this;
+    }
 }
 
 Expression* Expression::reduce() {
-    return this;
+    switch(m_objType) {
+        case ARITHMETIC:
+            return dynamic_cast<Arithmetic*>(this)->reduce();
+        default:
+            return this;
+    }
 }
 
 void Expression::jumping(int t, int f) {
-    emitJumps(toString(), t, f);
+    switch (m_objType) {
+        case ObjTypes::RELATION:
+            dynamic_cast<Relation*>(this)->jumping(0, f);
+            break;
+        default:
+            emitJumps(toString(), t, f);
+    }
 }
 
 void Expression::emitJumps(std::string test, int t, int f) {
@@ -33,7 +55,23 @@ void Expression::emitJumps(std::string test, int t, int f) {
 }
 
 std::string Expression::toString() {
-    return m_operand->toString();
+    std::string out;
+
+    switch(m_objType) {
+        case ObjTypes::ARITHMETIC:
+            out = dynamic_cast<Arithmetic*>(this)->toString();
+            break;
+        case ObjTypes::TEMP:
+            out = dynamic_cast<Temp*>(this)->toString();
+            break;
+        case ObjTypes::LOGICAL:
+            out = dynamic_cast<Logical*>(this)->toString();
+            break;
+        default:
+            out = m_operand->toString();
+    }
+
+    return out;
 }
 
 Type* Expression::type() const {

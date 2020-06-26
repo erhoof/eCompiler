@@ -11,8 +11,10 @@ class Token {
 public:
     explicit Token(int tag);
 
-    std::string toString() const;
+    std::string toString();
     int tag() const;
+
+    virtual ~Token() = default;
 
 private:
     int m_tag;

@@ -20,6 +20,7 @@ int Core::loadFile(const std::string &filename) {
     Logger::instance().log("Core", "loading file " + filename);
 
     std::ifstream stream(filename);
+    m_fileName = filename;
 
     if (stream) {
         Logger::instance().log("Core", "file successfully loaded!");
@@ -45,7 +46,7 @@ char Core::nextChar() {
     char ch = m_inputFile->c_str()[m_charNumb];
     m_charNumb++;
 
-    Logger::instance().log("Core", "nextChar: " + Logger::string(ch));
+    //Logger::instance().log("Core", "nextChar: " + Logger::string(ch));
 
     return ch;
 }
@@ -61,4 +62,8 @@ void Core::process() {
     auto lexer = new Lexer();
     auto parser = new Parser(lexer);
     parser->program();
+}
+
+std::string Core::filename() const {
+    return m_fileName;
 }

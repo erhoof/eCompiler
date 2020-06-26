@@ -12,9 +12,9 @@ void Env::put(Token* token, Id* id) {
     m_table.insert(std::pair<Token*, Id*>(token, id));
 }
 
-Id* Env::get(Token& token) {
+Id* Env::get(Token* token) {
     for (Env* e = this; e != nullptr; e = e->m_prev) {
-        auto search = e->m_table.find(&token);
+        auto search = e->m_table.find(token);
         if (search != e->m_table.end())
             return search->second;
     }

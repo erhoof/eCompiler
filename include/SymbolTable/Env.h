@@ -15,7 +15,7 @@ class Env {
 public:
     explicit Env(Env* prev);
     void put(Token* token, Id* id);
-    Id* get(Token& token);
+    Id* get(Token* token);
 
 protected:
     Env* m_prev;

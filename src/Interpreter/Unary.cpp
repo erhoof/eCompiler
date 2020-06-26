@@ -10,7 +10,7 @@ Unary::Unary(Token* token, Expression* expr)
 
     m_type = Type::max(TypeTable::instance().t_int, expr->type());
     if (m_type == nullptr)
-        error("type definition error");
+        error("type definition error (unary)");
 
     m_expr = expr;
 }

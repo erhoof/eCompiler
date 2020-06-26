@@ -9,7 +9,7 @@
 
 class Logical : public Expression {
 public:
-    Logical(Token* token, Expression* x1, Expression* x2);
+    Logical(Token* token, Expression* x1, Expression* x2, ObjTypes lt);
 
     Type* check(Type* p1, Type* p2) const;
     Expression* gen();

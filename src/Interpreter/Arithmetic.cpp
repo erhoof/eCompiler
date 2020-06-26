@@ -8,16 +8,20 @@
 Arithmetic::Arithmetic(Token* token, Expression* x1, Expression* x2) :
     Operand(token, TypeTable::instance().t_bool) {
 
-    m_type = Type::max(expr1()->type(), expr2()->type());
-    if (m_type == nullptr)
-        error("type definition error");
-
     m_expr1 = x1;
     m_expr2 = x2;
+
+    m_type = Type::max(expr1()->type(), expr2()->type());
+
+    if (m_type == nullptr)
+        error("type definition error (ar)");
 }
 
 Expression* Arithmetic::gen() {
-    return new Arithmetic(operand(), expr1()->reduce(), expr2()->reduce());
+    Expression* expr = new Arithmetic(operand(), m_expr1->reduce(), m_expr2->reduce());
+    expr->m_objType = ARITHMETIC;
+
+    return expr;
 }
 
 std::string Arithmetic::toString() const {

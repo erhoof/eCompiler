@@ -23,8 +23,25 @@ public:
 
     std::string toString();
 
+    enum ObjTypes {
+        EXPRESSION,
+        ARITHMETIC,
+        CONSTANT,
+        LOGICAL,
+        RELATION,
+        TEMP,
+        NOT,
+        AND,
+        OR
+    };
+
+    ObjTypes m_objType = EXPRESSION;
+
+    virtual ~Expression() = default;
+
 protected:
     Type* m_type;
+
 
 private:
     Token* m_operand;

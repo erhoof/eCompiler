@@ -17,7 +17,9 @@ void If::gen(int b, int a) {
     int label = newLabel();
 
     m_expr->jumping(0, a);
+
     emitLabel(label);
+
     m_stmt->gen(label, a);
 }
 

@@ -6,12 +6,15 @@
 
 #include <utility>
 
-const std::string &Word::lexeme() const {
+#include "../../include/IO/Logger.h"
+#include <iostream>
+
+const std::string Word::lexeme() const {
     return m_lexeme;
 }
 
 Word::Word(std::string s, int tag) : Token(tag) {
-    m_lexeme = std::move(s);
+    m_lexeme = s;
 }
 
 std::string Word::toString() const {

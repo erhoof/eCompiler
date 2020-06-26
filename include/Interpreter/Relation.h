@@ -11,7 +11,7 @@ class Relation : public Logical {
 public:
     Relation(Token* token, Expression* x1, Expression* x2);
 
-    Type* check(Type& p1, Type& p2);
+    Type* check(Type* p1, Type* p2);
 
     void jumping(int t, int f);
 };

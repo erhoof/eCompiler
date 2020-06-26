@@ -5,12 +5,12 @@
 #include "../../../include/Interpreter/Constructions/Set.h"
 #include "../../../include/SymbolTable/TypeTable.h"
 
-Set::Set(Id *id, Expression *x) {
+Set::Set(Id* id, Expression* x) {
     m_id = id;
     m_expr = x;
 
     if (check(id->type(), m_expr->type()) == nullptr)
-        error("type definition error");
+        error("type definition error (set)");
 }
 
 Type* Set::check(Type *t1, Type *t2) {
@@ -24,6 +24,9 @@ Type* Set::check(Type *t1, Type *t2) {
 }
 
 void Set::gen(int b, int a) {
+    //std::string out = id()->operand()->toString();
+    //std::string out = id()->toString() + " = " + expr()->gen()->toString();
+    //std::string out = (dynamic_cast<Word*>(id())->operand())->toString() + " = " + expr()->gen()->toString();
     std::string out = id()->toString() + " = " + expr()->gen()->toString();
 
     emit(out);

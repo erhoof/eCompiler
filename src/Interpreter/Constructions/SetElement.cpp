@@ -10,7 +10,7 @@ SetElement::SetElement(Access* x, Expression* y) {
     m_expr = y;
 
     if (check(x->type(), m_expr->type()) == nullptr)
-        error("type definiton error");
+        error("type definiton error (set elem)");
 }
 
 Type* SetElement::check(Type* t1, Type* t2) {

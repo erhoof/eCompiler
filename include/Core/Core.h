@@ -21,11 +21,16 @@ public:
 
     Core(const Core&) = delete;
     Core& operator=(const Core&) = delete;
+
+    std::string filename() const;
+
 private:
     Core() = default;
 
     std::string* m_inputFile;
     int m_charNumb = 0;
+
+    std::string m_fileName;
 };
 
 #endif //ECOMPILER_CORE_H

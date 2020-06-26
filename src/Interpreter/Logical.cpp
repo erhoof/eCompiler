@@ -5,16 +5,26 @@
 #include "../../include/Interpreter/Logical.h"
 #include "../../include/SymbolTable/TypeTable.h"
 #include "../../include/Interpreter/Temp.h"
+#include "../../include/Interpreter/Relation.h"
 
-Logical::Logical(Token* token, Expression* x1, Expression* x2)
+Logical::Logical(Token* token, Expression* x1, Expression* x2, ObjTypes lt)
     : Expression(token, TypeTable::instance().t_bool) {
-
-    m_type = check(expr1()->type(), expr2()->type());
-    if (m_type == nullptr)
-        error("type definition error");
 
     m_expr1 = x1;
     m_expr2 = x2;
+    m_objType = lt;
+
+    // Realtion
+    switch(m_objType) {
+        case RELATION:
+            m_type = dynamic_cast<Relation*>(this)->check(expr1()->type(), expr2()->type());
+            break;
+        default:
+            m_type = check(expr1()->type(), expr2()->type());
+    }
+
+    if (m_type == nullptr)
+        error("type definition error (logical)");
 }
 
 Type* Logical::check(Type* p1, Type* p2) const {
@@ -30,6 +40,7 @@ Expression* Logical::gen() {
     int a = newLabel();
 
     auto temp = new Temp(m_type);
+    temp->m_objType = ObjTypes::TEMP;
     this->jumping(0, f);
 
     emit(temp->toString() + " = true");

@@ -4,7 +4,7 @@
 
 #include "../../include/Interpreter/Or.h"
 
-Or::Or(Token* token, Expression* x1, Expression* x2) : Logical(token, x1, x2) {}
+Or::Or(Token* token, Expression* x1, Expression* x2) : Logical(token, x1, x2, ObjTypes::OR) {}
 
 void Or::jumping(int t, int f) {
     int label = t != 0 ? t : newLabel();

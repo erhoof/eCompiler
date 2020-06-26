@@ -7,9 +7,10 @@
 #include "../../include/SymbolTable/Array.h"
 #include "../../include/SymbolTable/TypeTable.h"
 
-Relation::Relation(Token* token, Expression* x1, Expression* x2) : Logical(token, x1, x2) {}
+Relation::Relation(Token* token, Expression* x1, Expression* x2) :
+    Logical(token, x1, x2, RELATION) {}
 
-Type* Relation::check(Type& p1, Type& p2) {
+Type* Relation::check(Type* p1, Type* p2) {
     /*if (instanceof<Array>(&p1) || instanceof<Array>(&p2))
         return nullptr;
     else if (p2 == p1)
