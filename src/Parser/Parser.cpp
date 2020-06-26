@@ -177,6 +177,8 @@ Statement* Parser::statement() {
             match(Tag::DO);
             s1 = statement();
             match(Tag::WHILE);
+            match('(');
+            x = boolean();
             match(')');
             match(';');
             doNode->init(s1, x);
