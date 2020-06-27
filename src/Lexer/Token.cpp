@@ -80,6 +80,12 @@ std::string Token::toString() {
         case 271:
             out = "||";
             break;
+        case 290:
+            out = "READ";
+            break;
+        case 291:
+            out = "WRITE";
+            break;
         default:
             out = std::string(1, (char)m_tag);
             return out;
