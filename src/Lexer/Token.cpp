@@ -33,7 +33,7 @@ std::string Token::toString() {
             out = "while";
             break;
         case 262:
-            out = false;
+            out = "false";
             break;
         case 265:
             out = "if";
@@ -56,7 +56,31 @@ std::string Token::toString() {
         case 257:
             out = "basic";
             break;
-         default:
+        case 256:
+            out = "&&";
+            break;
+        case 261:
+            out = "==";
+            break;
+        case 269:
+            out = "!=";
+            break;
+        case 273:
+            out = "t";
+            break;
+        case 266:
+            out = "index";
+            break;
+        case 263:
+            out = ">=";
+            break;
+        case 267:
+            out = "<=";
+            break;
+        case 271:
+            out = "||";
+            break;
+        default:
             out = std::string(1, (char)m_tag);
             return out;
     }
