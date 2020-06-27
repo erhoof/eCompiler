@@ -12,6 +12,7 @@ public:
     static Logger& instance();
 
     void log(const std::string& log);
+    void alog(const std::string& log);
     void nlog(const std::string& log);
     void flog(const std::string& log);
     void log(const std::string& module, const std::string& log);

@@ -58,10 +58,16 @@ void Parser::match(int tag) {
 
 // Beginning of syntax parsing
 void Parser::program() {
+    // Create root for asm code
     Statement* s = block();
 
     int begin = s->newLabel();
     int after = s->newLabel();
+
+    Logger::instance().alog("section .text");
+    Logger::instance().alog("    global _start");
+    Logger::instance().alog("    ");
+    Logger::instance().alog("_start:");
 
     s->emitLabel(begin);
     s->gen(begin, after);

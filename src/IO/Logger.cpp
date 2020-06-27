@@ -20,6 +20,10 @@ void Logger::log(const std::string& log) {
     std::cout << log << std::endl;
 }
 
+void Logger::alog(const std::string& log) {
+    std::cout << "asm| " << log << std::endl;
+}
+
 void Logger::nlog(const std::string& log) {
     std::cout << log;
 }
