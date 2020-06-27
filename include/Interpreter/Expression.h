@@ -29,6 +29,7 @@ public:
         CONSTANT,
         LOGICAL,
         RELATION,
+        ACCESS,
         TEMP,
         NOT,
         AND,

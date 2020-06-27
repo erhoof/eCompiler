@@ -8,6 +8,11 @@
 #include "../../include/Interpreter/Logical.h"
 #include "../../include/Interpreter/Relation.h"
 #include "../../include/Interpreter/Unary.h"
+#include "../../include/Interpreter/Access.h"
+#include "../../include/Interpreter/And.h"
+#include "../../include/Interpreter/Or.h"
+#include "../../include/Interpreter/Not.h"
+#include "../../include/Interpreter/Constant.h"
 
 #include <iostream>
 
@@ -18,8 +23,12 @@ Expression::Expression(Token* token, Type* type) {
 
 Expression* Expression::gen() {
     switch(m_objType) {
+        case ACCESS:
+            return dynamic_cast<Access*>(this)->gen();
         case ARITHMETIC:
             return dynamic_cast<Arithmetic*>(this)->gen();
+        case LOGICAL:
+            return dynamic_cast<Logical*>(this)->gen();
         case UNARY:
             return dynamic_cast<Unary*>(this)->gen();
         default:
@@ -38,6 +47,21 @@ Expression* Expression::reduce() {
 
 void Expression::jumping(int t, int f) {
     switch (m_objType) {
+        case ACCESS:
+            dynamic_cast<Access*>(this)->jumping(t, f);
+            break;
+        case AND:
+            dynamic_cast<And*>(this)->jumping(t, f);
+            break;
+        case CONSTANT:
+            dynamic_cast<Constant*>(this)->jumping(t, f);
+            break;
+        case NOT:
+            dynamic_cast<Not*>(this)->jumping(t, f);
+            break;
+        case OR:
+            dynamic_cast<Or*>(this)->jumping(t, f);
+            break;
         case ObjTypes::RELATION:
             dynamic_cast<Relation*>(this)->jumping(0, f);
             break;
@@ -61,6 +85,9 @@ std::string Expression::toString() {
     std::string out;
 
     switch(m_objType) {
+        case ACCESS:
+            out = dynamic_cast<Access*>(this)->toString();
+            break;
         case ObjTypes::ARITHMETIC:
             out = dynamic_cast<Arithmetic*>(this)->toString();
             break;
@@ -72,6 +99,9 @@ std::string Expression::toString() {
             break;
         case ObjTypes::UNARY:
             out = dynamic_cast<Unary*>(this)->toString();
+            break;
+        case NOT:
+            out = dynamic_cast<Not*>(this)->toString();
             break;
         default:
             out = m_operand->toString();
