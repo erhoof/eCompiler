@@ -24,3 +24,6 @@ int Tag::GE     = 263;
 int Tag::LE     = 267;
 int Tag::OR     = 271;
 int Tag::WHILE  = 275;
+
+int Tag::READ = 290;
+int Tag::WRITE = 291;
