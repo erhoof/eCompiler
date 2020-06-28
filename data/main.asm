@@ -8,6 +8,16 @@ section .bss    ; uninitialized variables
     j resb 4
     
 section .data    ; strings and other big stuff
+    line0 db 'Check numbs for greatiness: '
+    lenLine0 equ $-line0
+    line1 db 'i equals: '
+    lenLine1 equ $-line1
+    line2 db 'j equals: '
+    lenLine2 equ $-line2
+    line3 db 'i is greater than j'
+    lenLine3 equ $-line3
+    line4 db 'j is greater than i'
+    lenLine4 equ $-line4
     fmtd db '%d', 10, 0
     fmtf db '%f', 10, 0
     fmtc db '%c', 10, 0
@@ -15,25 +25,63 @@ section .data    ; strings and other big stuff
     
 main:
 L1:
-    mov eax, 10
-    mov [i], eax
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line0
+    mov edx, lenLine0
+    int 80h
 L3:
-    mov eax, 10
-    mov [j], eax
-L4:
-    mov eax, [i]
-    mov ebx, [j]
-    cmp eax, ebx
-    jne L5
-L6:
     mov eax, 30
+    mov [i], eax
+L4:
+    mov eax, 20
     mov [j], eax
 L5:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line1
+    mov edx, lenLine1
+    int 80h
+L6:
+    mov eax, [i]
+    push eax
+    push fmtd
+    call printf
+    add esp, 8
+L7:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line2
+    mov edx, lenLine2
+    int 80h
+L8:
     mov eax, [j]
     push eax
     push fmtd
     call printf
     add esp, 8
+L9:
+    mov eax, [i]
+    mov ebx, [j]
+    cmp eax, ebx
+    jle L10
+L11:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line3
+    mov edx, lenLine3
+    int 80h
+L10:
+    mov eax, [j]
+    mov ebx, [i]
+    cmp eax, ebx
+    jle L2
+L12:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line4
+    mov edx, lenLine4
+    int 80h
 L2:
     mov eax, 1
     mov ebx, 0

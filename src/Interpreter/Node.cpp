@@ -70,8 +70,40 @@ void Node::aExprEmit(void* id, std::string statement) {
 
     // Check for t's
     if (op.empty()) { // no complicated things
-        Logger::instance().alog("mov eax, " + lhr);
-        Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+        if (lhr == "true") {
+            Logger::instance().alog("mov eax, [" + m_id->toString() + "]");
+            Logger::instance().alog("or eax, 0x01");
+            Logger::instance().alog("mov [" + m_id->toString() + "], eax"); // place in place uwu
+        } else if (lhr == "false") {
+            Logger::instance().alog("mov eax, [" + m_id->toString() + "]");
+            Logger::instance().alog("and eax, 0xFFFFFFFE");
+            Logger::instance().alog("mov [" + m_id->toString() + "], eax"); // place in place uwu
+        } else if (isalpha(lhr[0])) {
+            Logger::instance().alog("mov eax, [" + lhr + "]");
+            Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+        } else if (lhr[0] == '-' && isalpha(lhr[1])) { // - with var
+            lhr.erase(0, 1); // remove first char (-)
+
+            Logger::instance().alog("mov eax, [" + lhr + "]");
+            Logger::instance().alog("imul eax, -1"); // mul eax by -1
+            Logger::instance().alog("mov [" + m_id->toString() + "], eax"); // place in place uwu
+        } else if (lhr[0] == '!') {
+            lhr.erase(0, 1); // remove first char (!)
+            if (lhr == "true") {
+                Logger::instance().alog("mov eax, [" + m_id->toString() + "]");
+                Logger::instance().alog("and eax, 0xFFFFFFFE");
+            } else if (lhr == "false") {
+                Logger::instance().alog("mov eax, [" + m_id->toString() + "]");
+                Logger::instance().alog("or eax, 0x01");
+            } else {
+                Logger::instance().alog("mov eax, [" + lhr + "]");
+                Logger::instance().alog("xor eax, 0x01"); // flip first bit
+            }
+            Logger::instance().alog("mov [" + m_id->toString() + "], eax"); // place in place uwu
+        } else {
+            Logger::instance().alog("mov eax, " + lhr);
+            Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+        }
     } else if (lhr[0] == 't' && rhr[0] == 't') { // lhr + rhr is t's
         Logger::instance().alog("mov eax, [" + lhr + "]");
         Logger::instance().alog("mov ebx, [" + rhr + "]");
