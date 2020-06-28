@@ -27,6 +27,7 @@ void While::gen(int b, int a) {
     emitLabel(label);
     stmt()->gen(label, b);
     emit("goto L" + std::to_string(b));
+    aemit("jmp L" + std::to_string(b));
 }
 
 Expression* While::expr() {

@@ -23,6 +23,7 @@ void Else::gen(int b, int a) {
     emitLabel(label1);
     stmt1()->gen(label1, a);
     emit("goto L" + std::to_string(a));
+    aemit("jmp L" + std::to_string(a));
     emitLabel(label2);
     stmt2()->gen(label2, a);
 }

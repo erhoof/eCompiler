@@ -68,6 +68,8 @@ void Expression::jumping(int t, int f) {
             break;
         default:
             emitJumps(toString(), t, f);
+            emitBasicAsmJumps(toString(), t, f);
+            //emitAsmJumps(this, nullptr, operand(), t, f);
     }
 }
 
@@ -79,6 +81,21 @@ void Expression::emitJumps(std::string test, int t, int f) {
         emit ("if " + test + " goto L" + std::to_string(t));
     } else if (f != 0) {
         emit("iffalse " + test + " goto L" + std::to_string(f));
+    }
+}
+
+void Expression::emitBasicAsmJumps(std::string test, int t, int f) {
+    if (test[0] == '!') {
+        test.erase(0, 1);
+        if (test == "true") {
+
+        } else if (test == "false") {
+
+        } else {
+
+        }
+    } else {
+
     }
 }
 

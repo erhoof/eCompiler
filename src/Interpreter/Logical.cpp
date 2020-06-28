@@ -6,6 +6,7 @@
 #include "../../include/SymbolTable/TypeTable.h"
 #include "../../include/Interpreter/Temp.h"
 #include "../../include/Interpreter/Relation.h"
+#include "../../include/IO/Logger.h"
 
 Logical::Logical(Token* token, Expression* x1, Expression* x2, ObjTypes lt)
     : Expression(token, TypeTable::instance().t_bool) {
@@ -43,10 +44,19 @@ Expression* Logical::gen() {
     temp->m_objType = ObjTypes::TEMP;
     this->jumping(0, f);
 
-    emit(temp->toString() + " = true");
+    emit(temp->toString() + " = true"); // this
+    aemit("mov eax, [" + temp->toString() + "]"); // to
+    Logger::instance().alog("or eax, 0x01"); // this
+    aemit("mov [" + temp->toString() + "], eax"); // <<
+
     emit("goto L" + std::to_string(a));
+    aemit("jmp L" + std::to_string(a));
     emitLabel(f);
+
     emit(temp->toString() + " = false");
+    aemit("mov eax, [" + temp->toString() + "]"); // to
+    Logger::instance().alog("and eax, 0xFFFFFFFE");
+    aemit("mov [" + temp->toString() + "], eax"); // <<
     emitLabel(a);
 
     return temp;

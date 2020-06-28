@@ -14,8 +14,11 @@ Constant::Constant(int i)
     : Expression(new Num(i), TypeTable::instance().t_int) {}
 
 void Constant::jumping(int t, int f) {
-    if (this == ConstantTable::instance().c_true && t != 0)
+    if (this == ConstantTable::instance().c_true && t != 0) {
         emit("goto L" + std::to_string(t));
-    else if (this == ConstantTable::instance().c_false && f != 0)
+        aemit("jmp L" + std::to_string(t));
+    } else if (this == ConstantTable::instance().c_false && f != 0) {
         emit("goto L" + std::to_string(f));
+        aemit("jmp L" + std::to_string(f));
+    }
 }

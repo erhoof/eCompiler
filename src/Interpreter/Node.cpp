@@ -114,8 +114,15 @@ void Node::aExprEmit(void* id, std::string statement) {
         Logger::instance().alog("mov eax, " + lhr);
         Logger::instance().alog("mov ebx, [" + rhr + "]");
     } else { // no t's
-        Logger::instance().alog("mov eax, " + lhr);
-        Logger::instance().alog("mov ebx, " + rhr);
+        if (isalpha(lhr[0]))
+            Logger::instance().alog("mov eax, [" + lhr + "]");
+        else
+            Logger::instance().alog("mov eax, " + lhr);
+
+        if (isalpha(rhr[0]))
+            Logger::instance().alog("mov ebx, [" + rhr + "]"); // is it var on numb
+        else
+            Logger::instance().alog("mov ebx, " + rhr);
     }
 
     switch(op.c_str()[0]) {

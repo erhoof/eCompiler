@@ -1,22 +1,21 @@
 {
     int i;
-    int j;
+    bool j;
+    j = true;
+    i = 0;
 
-    write("Check numbs for greatiness: ");
+    while (true) {
+        write("hello");
+    }
 
-    i = 30;
-    j = 20;
+    while ((i<10) && j) {
+        write(i);
+        i = i + 1;
 
-    write("i equals: ");
+        if (i == 5) {
+            j = false;
+        }
+    }
+
     write(i);
-    write("j equals: ");
-    write(j);
-
-    if (i > j) {
-        write("i is greater than j");
-    }
-
-    if (j > i) {
-        write("j is greater than i");
-    }
 }

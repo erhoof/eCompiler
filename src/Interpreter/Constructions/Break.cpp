@@ -17,6 +17,7 @@ void Break::gen(int b, int a) {
     std::string aout = "jmp L" + std::to_string(m_stmt->after());
 
     emit(out);
+    aemit(aout);
 }
 
 Statement* Break::stmt() {
