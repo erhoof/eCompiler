@@ -13,6 +13,7 @@
 #include "../../include/Interpreter/Or.h"
 #include "../../include/Interpreter/Not.h"
 #include "../../include/Interpreter/Constant.h"
+#include "../../include/Lexer/Tag.h"
 
 #include <iostream>
 
@@ -78,6 +79,95 @@ void Expression::emitJumps(std::string test, int t, int f) {
         emit ("if " + test + " goto L" + std::to_string(t));
     } else if (f != 0) {
         emit("iffalse " + test + " goto L" + std::to_string(f));
+    }
+}
+
+void Expression::emitAsmJumps(Expression* x1, Expression* x2, Token* op, int t, int f) {
+    std::string x1s = x1->toString();
+    std::string x2s = x2->toString();
+    if (isalpha(x1s[0])) // Check if x1 is var or constant and move it
+        aemit("mov eax, [" + x1s + "]");
+    else
+        aemit("mov eax, " + x1s);
+    if (isalpha(x2s[0])) // Check if x2 is var or constant and move it
+        aemit("mov ebx, [" + x2s + "]");
+    else
+        aemit("mov ebx, " + x2s);
+
+    if (t != 0 && f != 0) {
+        //emit("if " + test + " goto L" + std::to_string(t));
+        //emit("goto L" + std::to_string(f));
+        aemit("cmp eax, ebx");
+
+        switch(op->tag()) {
+            case '<':
+                aemit("jl l" + std::to_string(t)); // Jump Less
+                break;
+            case Tag::C_LE:
+                aemit("jle L" + std::to_string(t)); // Jump Less/Equal
+                break;
+            case Tag::C_GE:
+                aemit("jge L" + std::to_string(t)); // Jump Greater/Equal
+                break;
+            case '>':
+                aemit("jg L" + std::to_string(t)); // Jump Greater
+                break;
+            case Tag::C_EQ:
+                aemit("je L" + std::to_string(t)); // Jump Equal
+                break;
+            case Tag::C_NE:
+                aemit("jne L" + std::to_string(t)); // Jump Not Equal
+                break;
+        }
+        aemit("jmp L" + std::to_string(f));
+    } else if (t != 0) {
+        //emit ("if " + test + " goto L" + std::to_string(t));
+        aemit("cmp eax, ebx");
+
+        switch(op->tag()) {
+            case '<':
+                aemit("jl l" + std::to_string(t)); // Jump Less
+                break;
+            case Tag::C_LE:
+                aemit("jle L" + std::to_string(t)); // Jump Less/Equal
+                break;
+            case Tag::C_GE:
+                aemit("jge L" + std::to_string(t)); // Jump Greater/Equal
+                break;
+            case '>':
+                aemit("jg L" + std::to_string(t)); // Jump Greater
+                break;
+            case Tag::C_EQ:
+                aemit("je L" + std::to_string(t)); // Jump Equal
+                break;
+            case Tag::C_NE:
+                aemit("jne L" + std::to_string(t)); // Jump Not Equal
+                break;
+        }
+    } else if (f != 0) {
+        //emit("iffalse " + test + " goto L" + std::to_string(f));
+        aemit("cmp eax, ebx");
+
+        switch(op->tag()) { // REVERSED FROM MAIN IF
+            case Tag::C_GE: // <
+                aemit("jg l" + std::to_string(f)); // Jump Less
+                break;
+            case '>': // LE
+                aemit("jle L" + std::to_string(f)); // Jump Less/Equal
+                break;
+            case '<': // GE
+                aemit("jge L" + std::to_string(f)); // Jump Greater/Equal
+                break;
+            case Tag::C_LE: // >
+                aemit("jg L" + std::to_string(f)); // Jump Greater
+                break;
+            case Tag::C_NE: // EQ
+                aemit("je L" + std::to_string(f)); // Jump Equal
+                break;
+            case Tag::C_EQ: // NE
+                aemit("jne L" + std::to_string(f)); // Jump Not Equal
+                break;
+        }
     }
 }
 

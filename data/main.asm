@@ -5,8 +5,7 @@ section .text
     
 section .bss    ; uninitialized variables
     i resb 4
-    t1 resb 4
-    t2 resb 4
+    j resb 4
     
 section .data    ; strings and other big stuff
     fmtd db '%d', 10, 0
@@ -16,20 +15,21 @@ section .data    ; strings and other big stuff
     
 main:
 L1:
-    mov eax, 5
-    mov ebx, 10
-    imul eax, ebx
-    mov [t1], eax
-    mov eax, 2
-    mov ebx, 10
-    imul eax, ebx
-    mov [t2], eax
-    mov eax, [t1]
-    mov ebx, [t2]
-    add eax, ebx
+    mov eax, 10
     mov [i], eax
 L3:
+    mov eax, 10
+    mov [j], eax
+L4:
     mov eax, [i]
+    mov ebx, [j]
+    cmp eax, ebx
+    jne L5
+L6:
+    mov eax, 30
+    mov [j], eax
+L5:
+    mov eax, [j]
     push eax
     push fmtd
     call printf

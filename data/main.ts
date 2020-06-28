@@ -1,5 +1,12 @@
 {
     int i;
-    i = 5 * 10 + 2 * 10;
-    write(i);
+    int j;
+    i = 10;
+    j = 10;
+
+    if (i == j) {
+        j = 30;
+    }
+
+    write(j);
 }

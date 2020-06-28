@@ -31,4 +31,5 @@ void Relation::jumping(int t, int f) {
     std::string test = a->toString() + " " + operand()->toString() + " " + b->toString();
 
     emitJumps(test, t, f);
+    emitAsmJumps(a, b, operand(), t, f);
 }

@@ -17,6 +17,7 @@ public:
     Expression* reduce();
     void jumping(int t, int f);
     void emitJumps(std::string test, int t, int f);
+    void emitAsmJumps(Expression* x1, Expression* x2, Token* op, int t, int f);
 
     Type* type() const;
     Token* operand() const;
