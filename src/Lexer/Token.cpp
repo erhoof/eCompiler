@@ -7,6 +7,7 @@
 #include "../../include/Lexer/Num.h"
 #include "../../include/Lexer/Real.h"
 #include "../../include/Lexer/Word.h"
+#include "../../include/Lexer/String.h"
 
 Token::Token(int tag) {
     m_tag = tag;
@@ -85,6 +86,12 @@ std::string Token::toString() {
             break;
         case 291:
             out = "WRITE";
+            break;
+        case 292:
+            out = static_cast<String*>(this)->toString();
+            break;
+        case 293:
+            out = "DQUOTE";
             break;
         default:
             out = std::string(1, (char)m_tag);

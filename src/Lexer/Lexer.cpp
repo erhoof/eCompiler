@@ -10,6 +10,7 @@
 #include "../../include/Lexer/Num.h"
 #include "../../include/Lexer/Real.h"
 #include "../../include/SymbolTable/TypeTable.h"
+#include "../../include/Lexer/String.h"
 
 int Lexer::m_line = 1;
 
@@ -21,6 +22,8 @@ Lexer::Lexer() {
     reserve(*(new Word("while",   Tag::WHILE)));
     reserve(*(new Word("do",      Tag::DO)));
     reserve(*(new Word("break",   Tag::BREAK)));
+    reserve(*(new Word("read",    Tag::READ)));
+    reserve(*(new Word("write",   Tag::WRITE)));
 
     // Bools
     reserve(*WordTable::instance().w_true);
@@ -108,6 +111,20 @@ Token* Lexer::scan() {
                 return WordTable::instance().w_ge;
             else
                 return (new Token('>'));
+    }
+
+    if (m_peek == '"') {
+        std::string line;
+        readChar();
+
+        while (m_peek != '"') {
+            line += Logger::string(m_peek);
+            readChar();
+        }
+        readChar();
+
+        Logger::instance().log("Lexer", "new String - \"" + line + "\"");
+        return new String(line);
     }
 
     if (isdigit(m_peek)) {

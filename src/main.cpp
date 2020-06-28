@@ -11,7 +11,12 @@ int main(int argc, char* argv[]) {
     Logger::instance().log("eCompiler started.");
 
     Core::instance().loadFile("../data/main.ts");
-    Core::instance().process();
+
+    Core::instance().process(); // First passage (vars / lines)
+    Logger::instance().prepareASM();
+
+    Core::instance().process(); // Second passage (finalizing asm file)
+    Logger::instance().finishASM();
 
     return 0;
 }

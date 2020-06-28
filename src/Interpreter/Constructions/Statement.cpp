@@ -13,6 +13,7 @@ int Statement::after() const {
 
 int Statement::setAfter(int after) {
     m_after = after;
+    return after;
 }
 
 void Statement::gen(int b, int a) {}

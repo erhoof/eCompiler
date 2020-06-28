@@ -12,5 +12,8 @@ Expression* Operand::reduce() {
     auto t = new Temp(type());
     t->m_objType = TEMP;
     emit(t->toString() + " = " + x->toString());
+
+    aExprEmit(t, x->toString());
+
     return t;
 }

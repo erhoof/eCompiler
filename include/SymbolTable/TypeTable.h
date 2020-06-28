@@ -19,6 +19,7 @@ public:
     Type* t_float;
     Type* t_char;
     Type* t_bool;
+    Type* t_str;
 private:
     TypeTable();
 };

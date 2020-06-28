@@ -18,8 +18,9 @@ public:
     char peek() const;
     const std::unordered_map<std::string, Word*> &words() const;
 
-private:
     static int m_line;
+
+private:
     char m_peek = ' ';
     std::unordered_map<std::string, Word*> m_words;
 

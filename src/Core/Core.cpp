@@ -6,6 +6,7 @@
 #include "../../include/IO/Logger.h"
 #include "../../include/Lexer/Lexer.h"
 #include "../../include/Parser/Parser.h"
+#include "../../include/Interpreter/Temp.h"
 
 #include <fstream>
 #include <streambuf>
@@ -67,9 +68,15 @@ void Core::dumpCore(const std::string &reason) {
 }
 
 void Core::process() {
+    m_charNumb = 0;
+    Lexer::m_line = 1;
+    Node::m_labels = 0;
+    Temp::m_count = 0;
     auto lexer = new Lexer();
     auto parser = new Parser(lexer);
     parser->program();
+
+    Logger::instance().m_passages++;
 }
 
 std::string Core::filename() const {

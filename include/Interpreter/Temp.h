@@ -12,8 +12,9 @@ public:
     explicit Temp(Type* type);
     std::string toString() const;
 
-private:
     static int m_count;
+
+private:
     int m_number;
 };
 

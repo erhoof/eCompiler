@@ -27,3 +27,5 @@ int Tag::WHILE  = 275;
 
 int Tag::READ = 290;
 int Tag::WRITE = 291;
+int Tag::STRING = 292;
+int Tag::DQUOTE = 293;

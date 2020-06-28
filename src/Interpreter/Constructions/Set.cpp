@@ -4,6 +4,7 @@
 
 #include "../../../include/Interpreter/Constructions/Set.h"
 #include "../../../include/SymbolTable/TypeTable.h"
+#include "../../../include/IO/Logger.h"
 
 Set::Set(Id* id, Expression* x) {
     m_id = id;
@@ -27,9 +28,12 @@ void Set::gen(int b, int a) {
     //std::string out = id()->operand()->toString();
     //std::string out = id()->toString() + " = " + expr()->gen()->toString();
     //std::string out = (dynamic_cast<Word*>(id())->operand())->toString() + " = " + expr()->gen()->toString();
-    std::string out = id()->toString() + " = " + expr()->gen()->toString();
+    std::string exprString = expr()->gen()->toString();
+    std::string out = id()->toString() + " = " + exprString;
 
     emit(out);
+
+    aExprEmit(id(), exprString);
 }
 
 Id* Set::id() {

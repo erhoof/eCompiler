@@ -6,6 +6,8 @@
 #include "../../include/Lexer/Lexer.h"
 #include "../../include/IO/Logger.h"
 #include "../../include/Core/Core.h"
+#include "../../include/Interpreter/Id.h"
+#include "../../include/SymbolTable/TypeTable.h"
 
 int Node::m_labels = 0;
 
@@ -19,14 +21,108 @@ int Node::newLabel() {
 
 void Node::emitLabel(int i) {
     std::string out = "L" + std::to_string(i) + ":";
-    Logger::instance().nlog(out);
+    Logger::instance().log(out);
+    Logger::instance().nalog(out);
 }
 
 void Node::emit(std::string str) {
     Logger::instance().log(str);
 }
 
+void Node::aemit(std::string str) {
+    Logger::instance().alog(str);
+}
+
 void Node::error(std::string str) const {
     Logger::instance().log("Interpreter", "error. line: " + std::to_string(m_lexerLine) + ": " + str);
     Core::instance().dumpCore("interpreter has caused a core dump.");
+}
+
+void Node::aExprEmit(void* id, std::string statement) {
+    Id* m_id = (Id*)id;
+
+    // Parse set
+    std::string lhr;
+    std::string rhr;
+    std::string op;
+    const char* cExprString = statement.c_str();
+    int i = 0;
+    if (cExprString[0] == '-') {
+        lhr += '-';
+        i++;
+    }
+    for (; i < statement.size(); i++) {
+        if (cExprString[i] == ' ')
+            continue;
+
+        if (op.empty()) {
+            if (cExprString[i] == '/' ||
+                cExprString[i] == '*' ||
+                cExprString[i] == '+' ||
+                cExprString[i] == '-')
+                op = cExprString[i];
+            else
+                lhr += cExprString[i];
+        } else {
+            rhr += cExprString[i];
+        }
+    }
+
+    // Check for t's
+    if (op.empty()) { // no complicated things
+        Logger::instance().alog("mov eax, " + lhr);
+        Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+    } else if (lhr[0] == 't' && rhr[0] == 't') { // lhr + rhr is t's
+        Logger::instance().alog("mov eax, [" + lhr + "]");
+        Logger::instance().alog("mov ebx, [" + rhr + "]");
+    } else if (lhr[0] == 't') { // only lhr
+        Logger::instance().alog("mov eax, [" + lhr + "]");
+        Logger::instance().alog("mov ebx, " + rhr);
+    } else if (rhr[0] == 't' ){ // only rhr
+        Logger::instance().alog("mov eax, " + lhr);
+        Logger::instance().alog("mov ebx, [" + rhr + "]");
+    } else { // no t's
+        Logger::instance().alog("mov eax, " + lhr);
+        Logger::instance().alog("mov ebx, " + rhr);
+    }
+
+    switch(op.c_str()[0]) {
+        case '+': {
+            if (m_id->type() == TypeTable::instance().t_float) {
+
+            } else {
+                Logger::instance().alog("add eax, ebx");
+                Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+            }
+            break;
+        }
+        case '-': {
+            if (m_id->type() == TypeTable::instance().t_float) {
+
+            } else {
+                Logger::instance().alog("sub eax, ebx");
+                Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+            }
+            break;
+        }
+        case '*': {
+            if (m_id->type() == TypeTable::instance().t_float) {
+
+            } else {
+                Logger::instance().alog("imul eax, ebx");
+                Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+            }
+            break;
+        }
+        case '/': {
+            if (m_id->type() == TypeTable::instance().t_float) {
+
+            } else {
+                Logger::instance().alog("mov edx, 0");
+                Logger::instance().alog("idiv ebx");
+                Logger::instance().alog("mov [" + m_id->toString() + "], eax");
+            }
+            break;
+        }
+    }
 }

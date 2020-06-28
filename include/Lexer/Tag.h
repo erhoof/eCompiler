@@ -27,7 +27,11 @@ public:
         C_GE     = 263,
         C_LE     = 267,
         C_OR     = 271,
-        C_WHILE  = 275
+        C_WHILE  = 275,
+        C_READ   = 290,
+        C_WRITE  = 291,
+        C_STRING = 292,
+        C_DQUOTE = 293
     };
 
     static int
@@ -50,7 +54,11 @@ public:
         GE,
         LE,
         OR,
-        WHILE;
+        WHILE,
+        READ,
+        WRITE,
+        STRING,
+        DQUOTE;
 };
 
 #endif //ECOMPILER_TAG_H

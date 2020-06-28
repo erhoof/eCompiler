@@ -44,7 +44,6 @@ public:
 protected:
     Type* m_type;
 
-
 private:
     Token* m_operand;
 };

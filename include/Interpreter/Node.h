@@ -14,12 +14,15 @@ public:
     int newLabel();
     void emitLabel(int i);
     void emit(std::string str);
+    void aemit(std::string str);
+    void aExprEmit(void* id, std::string statement);
 
     void error(std::string str) const;
 
+    static int m_labels;
+
 private:
     int m_lexerLine = 0;
-    static int m_labels;
 };
 
 #endif //ECOMPILER_NODE_H

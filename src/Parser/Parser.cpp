@@ -30,6 +30,8 @@
 #include "../../include/Interpreter/Constant.h"
 #include "../../include/SymbolTable/TypeTable.h"
 #include "../../include/Interpreter/ConstantTable.h"
+#include "../../include/Interpreter/Constructions/Write.h"
+#include "../../include/Lexer/String.h"
 
 Parser::Parser(Lexer* lexer) {
     Logger::instance().log("Parser", "created instance.");
@@ -64,11 +66,6 @@ void Parser::program() {
     int begin = s->newLabel();
     int after = s->newLabel();
 
-    Logger::instance().alog("section .text");
-    Logger::instance().alog("    global _start");
-    Logger::instance().alog("    ");
-    Logger::instance().alog("_start:");
-
     s->emitLabel(begin);
     s->gen(begin, after);
     s->emitLabel(after);
@@ -99,6 +96,13 @@ void Parser::declarations() {
 
         //    Id(Word& id, Type& type, int offset);
         auto id = new Id((Word*)token, t, m_used);
+
+        if (!Logger::instance().m_passages) {
+            Var newVar;
+            newVar.name = ((Word*) token)->toString();
+            newVar.size = t->width();
+            Logger::instance().m_vars.push_back(newVar);
+        }
 
         m_top->put(token, id);
         m_used += t->width();
@@ -195,6 +199,14 @@ Statement* Parser::statement() {
             match(Tag::BREAK);
             match(';');
             return new Break();
+        }
+        case Tag::C_WRITE: {
+            match(Tag::WRITE);
+            match('(');
+            x = str();
+            match(')');
+            match(';');
+            return new Write(x);
         }
         case '{':
             Logger::instance().log("Parser", "m_look -> BLOCK {");
@@ -300,11 +312,12 @@ Expression* Parser::expression() {
         x->m_objType = Expression::ARITHMETIC;
     }
 
-    return  x;
+    return x;
 }
 
 Expression* Parser::term() {
     Expression* x = unary();
+
     while(m_look->tag() == '*' || m_look->tag() == '/') {
         auto token = m_look;
         move();
@@ -413,4 +426,25 @@ Access* Parser::offset(Id* a) { // I -> [E] | [E] I
     }
 
     return new Access(a, loc, type);
+}
+
+std::string Parser::writeLine() {
+    return "";
+}
+
+void Parser::readLine(std::string) {
+
+}
+
+Expression* Parser::str() {
+    Expression* x = nullptr;
+
+    if (m_look->tag() == Tag::STRING) {
+        x = new Expression(new String(m_look->toString()), TypeTable::instance().t_str);
+        move();
+    } else {
+        x = expression();
+    }
+
+    return x;
 }

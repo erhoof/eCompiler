@@ -54,7 +54,10 @@ private:
     // Arrays
     Access* offset(Id* a);
 
-
+    // IO
+    std::string writeLine();
+    void readLine(std::string);
+    Expression* str();
 };
 
 #endif //ECOMPILER_PARSER_H
