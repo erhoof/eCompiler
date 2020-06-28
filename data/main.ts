@@ -1,21 +1,17 @@
 {
     int i;
     bool j;
-    j = true;
     i = 0;
+    j = true;
 
-    while (true) {
-        write("hello");
-    }
-
-    while ((i<10) && j) {
+    write("counting...");
+    while ((i < 10) && j) {
+        write("here");
         write(i);
-        i = i + 1;
-
         if (i == 5) {
             j = false;
         }
-    }
 
-    write(i);
+        i = i + 1;
+    }
 }

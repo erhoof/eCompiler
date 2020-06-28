@@ -88,14 +88,72 @@ void Expression::emitBasicAsmJumps(std::string test, int t, int f) {
     if (test[0] == '!') {
         test.erase(0, 1);
         if (test == "true") {
-
+            if (t != 0 && f != 0) {
+                aemit("jmp L" + std::to_string(f));
+            } else if (f != 0) {
+                aemit("jmp L" + std::to_string(f));
+            }
         } else if (test == "false") {
-
-        } else {
-
+            if (t != 0 && f != 0) {
+                aemit("jmp L" + std::to_string(t));
+                aemit("jmp L" + std::to_string(f));
+            } else if (t != 0) {
+                aemit("jmp L" + std::to_string(t));
+            }
+        } else { // TODO: CHECK LATER PLEASE!! I WAS TOO SLEEPY!
+            if (t != 0 && f != 0) {
+                //emit("if " + test + " goto L" + std::to_string(t));
+                //emit("goto L" + std::to_string(f));
+                aemit("mov eax, [" + test + "]"); // ?
+                aemit("cmp eax, 0xFFFFFFFE");
+                aemit("je L" + std::to_string(t));
+                aemit("jmp L" + std::to_string(f));
+            } else if (t != 0) {
+                //emit ("if " + test + " goto L" + std::to_string(t));
+                aemit("mov eax, [" + test + "]"); // ?
+                aemit("cmp eax, 0xFFFFFFFE");
+                aemit("je L" + std::to_string(t));
+            } else if (f != 0) {
+                //emit("iffalse " + test + " goto L" + std::to_string(f));
+                aemit("mov eax, [" + test + "]"); // ?
+                aemit("cmp eax, 0xFFFFFFFE");
+                aemit("jne L" + std::to_string(f)); // if ? not eq to true -> go F
+            }
         }
     } else {
-
+        if (test == "true") {
+            if (t != 0 && f != 0) {
+                aemit("jmp L" + std::to_string(t));
+                aemit("jmp L" + std::to_string(f));
+            } else if (t != 0) {
+                aemit("jmp L" + std::to_string(t));
+            }
+        } else if (test == "false") {
+            if (t != 0 && f != 0) {
+                aemit("jmp L" + std::to_string(f));
+            } else if (f != 0) {
+                aemit("jmp L" + std::to_string(f));
+            }
+        } else {
+            if (t != 0 && f != 0) {
+                //emit("if " + test + " goto L" + std::to_string(t));
+                //emit("goto L" + std::to_string(f));
+                aemit("mov eax, [" + test + "]"); // ?
+                aemit("cmp eax, 0x01");
+                aemit("je L" + std::to_string(t));
+                aemit("jmp L" + std::to_string(f));
+            } else if (t != 0) {
+                //emit ("if " + test + " goto L" + std::to_string(t));
+                aemit("mov eax, [" + test + "]"); // ?
+                aemit("cmp eax, 0x01");
+                aemit("je L" + std::to_string(t));
+            } else if (f != 0) {
+                //emit("iffalse " + test + " goto L" + std::to_string(f));
+                aemit("mov eax, [" + test + "]"); // ?
+                aemit("cmp eax, 0x01");
+                aemit("jne L" + std::to_string(f)); // if ? not eq to true -> go F
+            }
+        }
     }
 }
 
