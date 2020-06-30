@@ -22,10 +22,23 @@ Type* SetElement::check(Type* t1, Type* t2) {
 
 void SetElement::gen(int b, int a) {
     std::string s1 = m_index->reduce()->toString();
-    std::string s2 = m_expr->reduce()->toString();
+    Expression* s2e = m_expr->reduce();
+    std::string s2 = s2e->toString();
     std::string out = array()->toString() + " [ " + s1 + " ] = " + s2;
 
     emit(out);
+
+    if (isalpha(s2[0]))
+        aemit("mov eax, [" + s2 + "]");
+    else
+        aemit("mov eax, " + s2);
+
+    if (isalpha(s1[0]))
+        aemit("mov ebx, [" + s1 + "]");
+    else
+        aemit("mov ebx, " + s1);
+
+    aemit("mov dword [" + array()->toString() + " + ebx * " + std::to_string(s2e->type()->width())  + "], eax");
 }
 
 Id* SetElement::array() {

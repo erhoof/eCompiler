@@ -13,6 +13,12 @@ struct Var {
     int size;
 };
 
+struct PreArray {
+    std::string name;
+    int size;
+    int width;
+};
+
 class Logger {
 public:
     static Logger& instance();
@@ -30,6 +36,7 @@ public:
     std::vector<std::string> m_lines;
     int getLineNumb();
     std::vector<Var> m_vars;
+    std::vector<PreArray> m_arrays;
 
     int m_passages = 0;
     void prepareASM();

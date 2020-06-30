@@ -65,7 +65,7 @@ void Logger::prepareASM() {
 
     // Vars
     std::string out;
-    if (!m_vars.empty()) {
+    if (!m_vars.empty() || !m_arrays.empty()) {
         nalog("section .bss    ; uninitialized variables");
         for (auto& m_var : m_vars) {
             out = m_var.name;
@@ -73,7 +73,12 @@ void Logger::prepareASM() {
             out += std::to_string(m_var.size);
             alog(out);
         }
-        alog("");
+        for (auto& m_arr : m_arrays) {
+            out = m_arr.name;
+            out += " resb ";
+            out += std::to_string(m_arr.width * m_arr.size);
+            alog(out);
+        }
     }
 
     // Lines

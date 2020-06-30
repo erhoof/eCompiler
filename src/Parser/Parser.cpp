@@ -32,6 +32,7 @@
 #include "../../include/Interpreter/ConstantTable.h"
 #include "../../include/Interpreter/Constructions/Write.h"
 #include "../../include/Lexer/String.h"
+#include "../../include/Core/Extensions.h"
 
 Parser::Parser(Lexer* lexer) {
     Logger::instance().log("Parser", "created instance.");
@@ -98,10 +99,20 @@ void Parser::declarations() {
         auto id = new Id((Word*)token, t, m_used);
 
         if (!Logger::instance().m_passages) {
-            Var newVar;
-            newVar.name = ((Word*) token)->toString();
-            newVar.size = t->width();
-            Logger::instance().m_vars.push_back(newVar);
+            if (t->tag() == 266) {
+                PreArray newArray;
+                newArray.name = ((Word*) token)->toString();
+                Type* tType = nullptr;
+                for (tType = t; tType->tag() == Tag::INDEX; tType = ((Array*)tType)->type()) {}
+                newArray.size = tType->width();
+                newArray.width = t->width() / tType->width();
+                Logger::instance().m_arrays.push_back(newArray);
+            } else {
+                Var newVar;
+                newVar.name = ((Word*) token)->toString();
+                newVar.size = t->width();
+                Logger::instance().m_vars.push_back(newVar);
+            }
         }
 
         m_top->put(token, id);
@@ -425,7 +436,9 @@ Access* Parser::offset(Id* a) { // I -> [E] | [E] I
         loc = t2;
     }
 
-    return new Access(a, loc, type);
+    Access* ex = new Access(a, loc, type);
+    ex->m_objType = Expression::ACCESS;
+    return ex;
 }
 
 std::string Parser::writeLine() {

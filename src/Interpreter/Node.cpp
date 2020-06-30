@@ -41,6 +41,45 @@ void Node::error(std::string str) const {
 void Node::aExprEmit(void* id, std::string statement) {
     Id* m_id = (Id*)id;
 
+    // Check if it's array
+    if (statement.find("]") != std::string::npos) {
+        Logger::instance().log("Interpreter", "it's an array!");
+
+        int i = 0;
+        std::string lhr;
+        std::string rhr;
+        bool nameSet = false;
+        for (; i < statement.size(); i++) {
+            if (statement[i] == ' ')
+                continue;
+
+            if (statement[i] == '[') {
+                nameSet = true;
+                continue;
+            }
+
+            if (statement[i] == ']')
+                break;
+
+            if (!nameSet) {
+                lhr += statement[i];
+            } else {
+                rhr += statement[i];
+            }
+        }
+
+        if (isalpha(rhr[0]))
+            aemit("mov eax, [" + rhr + "]");
+        else
+            aemit("mov eax, " + rhr);
+
+        //aemit("mov ebx, dword [" + array()->toString() + " + ebx * " + std::to_string(s2e->type()->width())  + "]")
+        aemit("mov ebx, dword [" + lhr + " + eax * " + std::to_string(m_id->type()->width()) + "]");
+        aemit("mov [" + m_id->toString() + "], ebx");
+
+        return;
+    }
+
     // Parse set
     std::string lhr;
     std::string rhr;
@@ -104,7 +143,7 @@ void Node::aExprEmit(void* id, std::string statement) {
             Logger::instance().alog("mov eax, " + lhr);
             Logger::instance().alog("mov [" + m_id->toString() + "], eax");
         }
-    } else if (lhr[0] == 't' && rhr[0] == 't') { // lhr + rhr is t's
+    } /*else if (lhr[0] == 't' && rhr[0] == 't') { // lhr + rhr is t's
         Logger::instance().alog("mov eax, [" + lhr + "]");
         Logger::instance().alog("mov ebx, [" + rhr + "]");
     } else if (lhr[0] == 't') { // only lhr
@@ -113,7 +152,8 @@ void Node::aExprEmit(void* id, std::string statement) {
     } else if (rhr[0] == 't' ){ // only rhr
         Logger::instance().alog("mov eax, " + lhr);
         Logger::instance().alog("mov ebx, [" + rhr + "]");
-    } else { // no t's
+    } */else { // no t's
+
         if (isalpha(lhr[0]))
             Logger::instance().alog("mov eax, [" + lhr + "]");
         else

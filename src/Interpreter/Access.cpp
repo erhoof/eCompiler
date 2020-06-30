@@ -21,7 +21,9 @@ Expression* Access::index() const {
 }
 
 Expression* Access::gen() {
-    return new Access(m_array, m_index->reduce(), type());
+    Expression* ex = new Access(m_array, m_index->reduce(), type());
+    ex->m_objType = Expression::ACCESS;
+    return ex;
 }
 
 void Access::jumping(int t, int f) {

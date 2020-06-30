@@ -250,7 +250,7 @@ std::string Expression::toString() {
     std::string out;
 
     switch(m_objType) {
-        case ACCESS:
+        case ObjTypes::ACCESS:
             out = dynamic_cast<Access*>(this)->toString();
             break;
         case ObjTypes::ARITHMETIC:

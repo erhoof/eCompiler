@@ -4,14 +4,26 @@ section .text
     extern printf
     
 section .bss    ; uninitialized variables
-    i resb 4
-    j resb 1
-    
+    c1 resb 4
+    c2 resb 4
+    temp resb 4
+    t1 resb 4
+    t2 resb 4
+    t3 resb 4
+    t4 resb 4
+    t5 resb 4
+    t6 resb 4
+    t7 resb 4
+    t8 resb 4
+    t9 resb 4
+    t10 resb 4
+    t11 resb 4
+    t12 resb 4
+    t13 resb 4
+    t14 resb 4
+    t15 resb 4
+    i resb 16
 section .data    ; strings and other big stuff
-    line0 db 'counting...'
-    lenLine0 equ $-line0
-    line1 db 'here'
-    lenLine1 equ $-line1
     fmtd db '%d', 10, 0
     fmtf db '%f', 10, 0
     fmtc db '%c', 10, 0
@@ -20,52 +32,121 @@ section .data    ; strings and other big stuff
 main:
 L1:
     mov eax, 0
-    mov [i], eax
+    mov ebx, 8
+    imul eax, ebx
+    mov [t1], eax
+    mov eax, 0
+    mov ebx, 4
+    imul eax, ebx
+    mov [t2], eax
+    mov eax, [t1]
+    mov ebx, [t2]
+    add eax, ebx
+    mov [t3], eax
+    mov eax, 0
+    mov ebx, [t3]
+    mov dword [i + ebx * 4], eax
 L3:
-    mov eax, [j]
-    or eax, 0x01
-    mov [j], eax
+    mov eax, 0
+    mov ebx, 8
+    imul eax, ebx
+    mov [t4], eax
+    mov eax, 1
+    mov ebx, 4
+    imul eax, ebx
+    mov [t5], eax
+    mov eax, [t4]
+    mov ebx, [t5]
+    add eax, ebx
+    mov [t6], eax
+    mov eax, 1
+    mov ebx, [t6]
+    mov dword [i + ebx * 4], eax
 L4:
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, line0
-    mov edx, lenLine0
-    int 80h
+    mov eax, 1
+    mov ebx, 8
+    imul eax, ebx
+    mov [t7], eax
+    mov eax, 0
+    mov ebx, 4
+    imul eax, ebx
+    mov [t8], eax
+    mov eax, [t7]
+    mov ebx, [t8]
+    add eax, ebx
+    mov [t9], eax
+    mov eax, 1
+    mov ebx, [t9]
+    mov dword [i + ebx * 4], eax
 L5:
-    mov eax, [i]
-    mov ebx, 10
+    mov eax, 1
+    mov ebx, 8
+    imul eax, ebx
+    mov [t10], eax
+    mov eax, 1
+    mov ebx, 4
+    imul eax, ebx
+    mov [t11], eax
+    mov eax, [t10]
+    mov ebx, [t11]
+    add eax, ebx
+    mov [t12], eax
+    mov eax, 2
+    mov ebx, [t12]
+    mov dword [i + ebx * 4], eax
+L6:
+    mov eax, 0
+    mov [c1], eax
+L7:
+    mov eax, 0
+    mov [c2], eax
+L8:
+    mov eax, [c1]
+    mov ebx, 2
     cmp eax, ebx
     jge L2
-    mov eax, [j]
-    cmp eax, 0x01
-    jne L2
-L6:
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, line1
-    mov edx, lenLine1
-    int 80h
-L7:
-    mov eax, [i]
+L9:
+    mov eax, 0
+    mov [c2], eax
+L10:
+    mov eax, [c2]
+    mov ebx, 2
+    cmp eax, ebx
+    jge L11
+L12:
+    mov eax, [c1]
+    mov ebx, 8
+    imul eax, ebx
+    mov [t13], eax
+    mov eax, [c2]
+    mov ebx, 4
+    imul eax, ebx
+    mov [t14], eax
+    mov eax, [t13]
+    mov ebx, [t14]
+    add eax, ebx
+    mov [t15], eax
+    mov eax, [t15]
+    mov ebx, dword [i + eax * 4]
+    mov [temp], ebx
+L13:
+    mov eax, [temp]
     push eax
     push fmtd
     call printf
     add esp, 8
-L8:
-    mov eax, [i]
-    mov ebx, 5
-    cmp eax, ebx
-    jne L9
-L10:
-    mov eax, [j]
-    and eax, 0xFFFFFFFE
-    mov [j], eax
-L9:
-    mov eax, [i]
+L14:
+    mov eax, [c2]
     mov ebx, 1
     add eax, ebx
-    mov [i], eax
-    jmp L5
+    mov [c2], eax
+    jmp L10
+L11:
+    mov eax, [c1]
+    mov ebx, 1
+    add eax, ebx
+    mov [c1], eax
+    jmp L8
 L2:
     mov eax, 1
     mov ebx, 0
