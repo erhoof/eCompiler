@@ -58,6 +58,7 @@ private:
     std::string writeLine();
     void readLine(std::string);
     Expression* str();
+    Expression* singleID();
 };
 
 #endif //ECOMPILER_PARSER_H

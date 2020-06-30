@@ -33,6 +33,7 @@
 #include "../../include/Interpreter/Constructions/Write.h"
 #include "../../include/Lexer/String.h"
 #include "../../include/Core/Extensions.h"
+#include "../../include/Interpreter/Constructions/Read.h"
 
 Parser::Parser(Lexer* lexer) {
     Logger::instance().log("Parser", "created instance.");
@@ -218,6 +219,14 @@ Statement* Parser::statement() {
             match(')');
             match(';');
             return new Write(x);
+        }
+        case Tag::C_READ: {
+            match(Tag::READ);
+            match('(');
+            x = singleID();
+            match(')');
+            match(';');
+            return new Read(x);
         }
         case '{':
             Logger::instance().log("Parser", "m_look -> BLOCK {");
@@ -460,4 +469,19 @@ Expression* Parser::str() {
     }
 
     return x;
+}
+
+Expression* Parser::singleID() {
+    if (m_look->tag() != Tag::C_ID)
+        error("syntax error, in read should be integer var or integer array offset");
+
+    std::string out = m_look->toString();
+    auto id = m_top->get(m_look);
+    if (id == nullptr)
+        error("'" + m_look->toString() + "' undeclared");
+    move();
+    if (m_look->tag() != '[')
+        return id;
+    else
+        return offset(id);
 }

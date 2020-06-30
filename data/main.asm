@@ -2,76 +2,65 @@
 section .text
     global main
     extern printf
+    extern scanf
     
 section .bss    ; uninitialized variables
+    i resb 4
     j resb 4
-    t1 resb 4
-    t2 resb 4
-    t3 resb 4
-    t4 resb 4
-    t5 resb 4
-    t6 resb 4
-    t7 resb 4
-    t8 resb 4
-    i resb 20
+    sum resb 4
 section .data    ; strings and other big stuff
+    line0 db 'Введите первое число: '
+    lenLine0 equ $-line0
+    line1 db 'Введите второе число: '
+    lenLine1 equ $-line1
+    line2 db 'Сумма первого и второго числа равна: '
+    lenLine2 equ $-line2
     fmtd db '%d', 10, 0
     fmtf db '%f', 10, 0
     fmtc db '%c', 10, 0
     fmtb db '%d', 10, 0
+    fmtdi db '%d', 0
+    fmtci db '%c', 0
+    fmtbi db '%d', 0
     
 main:
 L1:
-    mov eax, 0
-    mov ebx, 4
-    imul eax, ebx
-    mov [t1], eax
-    mov eax, 10
-    mov ebx, [t1]
-    mov dword [i + ebx * 4], eax
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line0
+    mov edx, lenLine0
+    int 80h
 L3:
-    mov eax, 1
-    mov ebx, 4
-    imul eax, ebx
-    mov [t2], eax
-    mov eax, 20
-    mov ebx, [t2]
-    mov dword [i + ebx * 4], eax
+    mov eax, i
+    push eax
+    push fmtdi
+    call scanf
+    add esp, 8
 L4:
-    mov eax, 0
-    mov ebx, 4
-    imul eax, ebx
-    mov [t4], eax
-    mov eax, 0
-    mov ebx, 4
-    imul eax, ebx
-    mov [t5], eax
-    mov eax, 0
-    mov ebx, 4
-    imul eax, ebx
-    mov [t6], eax
-    mov eax, 0
-    mov ebx, 4
-    imul eax, ebx
-    mov [t7], eax
-    mov ecx, [t6]
-    mov eax, dword [i + ecx * 4]
-    mov ecx, [t7]
-    mov ebx, dword [i + ecx * 4]
-    add eax, ebx
-    mov [t3], eax
-    mov eax, 1
-    mov ebx, 4
-    imul eax, ebx
-    mov [t8], eax
-    mov ecx, [t8]
-    mov eax, dword [i + ecx * 4]
-    mov ebx, [t3]
-    mov edx, 0
-    idiv ebx
-    mov [j], eax
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line1
+    mov edx, lenLine1
+    int 80h
 L5:
-    mov eax, [j]
+    mov eax, j
+    push eax
+    push fmtdi
+    call scanf
+    add esp, 8
+L6:
+    mov eax, [i]
+    mov ebx, [j]
+    add eax, ebx
+    mov [sum], eax
+L7:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, line2
+    mov edx, lenLine2
+    int 80h
+L8:
+    mov eax, [sum]
     push eax
     push fmtd
     call printf

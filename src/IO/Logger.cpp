@@ -61,6 +61,7 @@ void Logger::prepareASM() {
     nalog("section .text");
     alog("global main");
     alog("extern printf");
+    alog("extern scanf");
     alog("");
 
     // Vars
@@ -98,10 +99,15 @@ void Logger::prepareASM() {
         out += std::to_string(i);
         alog(out);
     }
+    // output
     alog("fmtd db '%d', 10, 0"); // Integer
     alog("fmtf db '%f', 10, 0"); // Float
     alog("fmtc db '%c', 10, 0"); // Char
     alog("fmtb db '%d', 10, 0"); // Bool
+    // input
+    alog("fmtdi db '%d', 0"); // Integer
+    alog("fmtci db '%c', 0"); // Char
+    alog("fmtbi db '%d', 0"); // Bool
     alog("");
 
     nalog("main:");
