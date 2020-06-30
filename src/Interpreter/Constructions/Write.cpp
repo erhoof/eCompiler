@@ -45,6 +45,14 @@ void Write::gen(int b, int a) {
     }*/
 
     std::string formatString;
+    if (m_expr->type() == TypeTable::instance().t_float)
+        formatString = "fmtf";
+    else if (m_expr->type() == TypeTable::instance().t_bool)
+        formatString = "fmtb";
+    else if (m_expr->type() == TypeTable::instance().t_int)
+        formatString = "fmtd";
+    else if (m_expr->type() == TypeTable::instance().t_char)
+        formatString = "fmtc";
 
     if (m_expr->type() == TypeTable::instance().t_str) {
         emit("write: \"" + m_expr->toString()+"\"");
@@ -64,16 +72,49 @@ void Write::gen(int b, int a) {
     }
 
     int size = 4 + m_expr->type()->width();
-    emit("write: " + m_expr->toString());
 
-    if (m_expr->type() == TypeTable::instance().t_float)
-        formatString = "fmtf";
-    else if (m_expr->type() == TypeTable::instance().t_bool)
-        formatString = "fmtb";
-    else if (m_expr->type() == TypeTable::instance().t_int)
-        formatString = "fmtd";
-    else if (m_expr->type() == TypeTable::instance().t_char)
-        formatString = "fmtc";
+    Expression* ex = m_expr->gen();
+    std::string statement = ex->toString();
+    emit("write: " + ex->toString());
+
+    if (ex->toString().find('[') != std::string::npos) {
+        int i = 0;
+
+        std::string lhr;
+        std::string rhr;
+        bool nameSet = false;
+        for (; i < statement.size(); i++) {
+            if (statement[i] == ' ')
+                continue;
+
+            if (statement[i] == '[') {
+                nameSet = true;
+                continue;
+            }
+
+            if (statement[i] == ']')
+                break;
+
+            if (!nameSet) {
+                lhr += statement[i];
+            } else {
+                rhr += statement[i];
+            }
+        }
+
+        if (isalpha(rhr[0]))
+            aemit("mov eax, [" + rhr + "]");
+        else
+            aemit("mov eax, " + rhr);
+
+        //aemit("mov ebx, dword [" + array()->toString() + " + ebx * " + std::to_string(s2e->type()->width())  + "]")
+        aemit("mov ebx, dword [" + lhr + " + eax * " + std::to_string(ex->type()->width()) + "]");
+        aemit("mov eax, ebx");
+        aemit("push eax");
+        aemit("push " + formatString);
+        aemit("call printf");
+        aemit("add esp, " + std::to_string(size)); // Restore stack pointer after
+    }
 
     for (const auto& v : Logger::instance().m_vars) {
         if (m_expr->toString() == v.name) {

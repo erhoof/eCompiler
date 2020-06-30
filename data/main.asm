@@ -4,25 +4,9 @@ section .text
     extern printf
     
 section .bss    ; uninitialized variables
-    c1 resb 4
-    c2 resb 4
-    temp resb 4
     t1 resb 4
     t2 resb 4
-    t3 resb 4
-    t4 resb 4
-    t5 resb 4
-    t6 resb 4
-    t7 resb 4
-    t8 resb 4
-    t9 resb 4
-    t10 resb 4
-    t11 resb 4
-    t12 resb 4
-    t13 resb 4
-    t14 resb 4
-    t15 resb 4
-    i resb 16
+    i resb 20
 section .data    ; strings and other big stuff
     fmtd db '%d', 10, 0
     fmtf db '%f', 10, 0
@@ -32,121 +16,24 @@ section .data    ; strings and other big stuff
 main:
 L1:
     mov eax, 0
-    mov ebx, 8
+    mov ebx, 4
     imul eax, ebx
     mov [t1], eax
+    mov eax, 10
+    mov ebx, [t1]
+    mov dword [i + ebx * 4], eax
+L3:
     mov eax, 0
     mov ebx, 4
     imul eax, ebx
     mov [t2], eax
-    mov eax, [t1]
-    mov ebx, [t2]
-    add eax, ebx
-    mov [t3], eax
-    mov eax, 0
-    mov ebx, [t3]
-    mov dword [i + ebx * 4], eax
-L3:
-    mov eax, 0
-    mov ebx, 8
-    imul eax, ebx
-    mov [t4], eax
-    mov eax, 1
-    mov ebx, 4
-    imul eax, ebx
-    mov [t5], eax
-    mov eax, [t4]
-    mov ebx, [t5]
-    add eax, ebx
-    mov [t6], eax
-    mov eax, 1
-    mov ebx, [t6]
-    mov dword [i + ebx * 4], eax
-L4:
-    mov eax, 1
-    mov ebx, 8
-    imul eax, ebx
-    mov [t7], eax
-    mov eax, 0
-    mov ebx, 4
-    imul eax, ebx
-    mov [t8], eax
-    mov eax, [t7]
-    mov ebx, [t8]
-    add eax, ebx
-    mov [t9], eax
-    mov eax, 1
-    mov ebx, [t9]
-    mov dword [i + ebx * 4], eax
-L5:
-    mov eax, 1
-    mov ebx, 8
-    imul eax, ebx
-    mov [t10], eax
-    mov eax, 1
-    mov ebx, 4
-    imul eax, ebx
-    mov [t11], eax
-    mov eax, [t10]
-    mov ebx, [t11]
-    add eax, ebx
-    mov [t12], eax
-    mov eax, 2
-    mov ebx, [t12]
-    mov dword [i + ebx * 4], eax
-L6:
-    mov eax, 0
-    mov [c1], eax
-L7:
-    mov eax, 0
-    mov [c2], eax
-L8:
-    mov eax, [c1]
-    mov ebx, 2
-    cmp eax, ebx
-    jge L2
-L9:
-    mov eax, 0
-    mov [c2], eax
-L10:
-    mov eax, [c2]
-    mov ebx, 2
-    cmp eax, ebx
-    jge L11
-L12:
-    mov eax, [c1]
-    mov ebx, 8
-    imul eax, ebx
-    mov [t13], eax
-    mov eax, [c2]
-    mov ebx, 4
-    imul eax, ebx
-    mov [t14], eax
-    mov eax, [t13]
-    mov ebx, [t14]
-    add eax, ebx
-    mov [t15], eax
-    mov eax, [t15]
+    mov eax, [t2]
     mov ebx, dword [i + eax * 4]
-    mov [temp], ebx
-L13:
-    mov eax, [temp]
+    mov eax, ebx
     push eax
     push fmtd
     call printf
     add esp, 8
-L14:
-    mov eax, [c2]
-    mov ebx, 1
-    add eax, ebx
-    mov [c2], eax
-    jmp L10
-L11:
-    mov eax, [c1]
-    mov ebx, 1
-    add eax, ebx
-    mov [c1], eax
-    jmp L8
 L2:
     mov eax, 1
     mov ebx, 0
