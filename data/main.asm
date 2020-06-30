@@ -4,8 +4,15 @@ section .text
     extern printf
     
 section .bss    ; uninitialized variables
+    j resb 4
     t1 resb 4
     t2 resb 4
+    t3 resb 4
+    t4 resb 4
+    t5 resb 4
+    t6 resb 4
+    t7 resb 4
+    t8 resb 4
     i resb 20
 section .data    ; strings and other big stuff
     fmtd db '%d', 10, 0
@@ -23,13 +30,48 @@ L1:
     mov ebx, [t1]
     mov dword [i + ebx * 4], eax
 L3:
-    mov eax, 0
+    mov eax, 1
     mov ebx, 4
     imul eax, ebx
     mov [t2], eax
-    mov eax, [t2]
-    mov ebx, dword [i + eax * 4]
-    mov eax, ebx
+    mov eax, 20
+    mov ebx, [t2]
+    mov dword [i + ebx * 4], eax
+L4:
+    mov eax, 0
+    mov ebx, 4
+    imul eax, ebx
+    mov [t4], eax
+    mov eax, 0
+    mov ebx, 4
+    imul eax, ebx
+    mov [t5], eax
+    mov eax, 0
+    mov ebx, 4
+    imul eax, ebx
+    mov [t6], eax
+    mov eax, 0
+    mov ebx, 4
+    imul eax, ebx
+    mov [t7], eax
+    mov ecx, [t6]
+    mov eax, dword [i + ecx * 4]
+    mov ecx, [t7]
+    mov ebx, dword [i + ecx * 4]
+    add eax, ebx
+    mov [t3], eax
+    mov eax, 1
+    mov ebx, 4
+    imul eax, ebx
+    mov [t8], eax
+    mov ecx, [t8]
+    mov eax, dword [i + ecx * 4]
+    mov ebx, [t3]
+    mov edx, 0
+    idiv ebx
+    mov [j], eax
+L5:
+    mov eax, [j]
     push eax
     push fmtd
     call printf

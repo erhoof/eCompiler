@@ -114,6 +114,7 @@ void Write::gen(int b, int a) {
         aemit("push " + formatString);
         aemit("call printf");
         aemit("add esp, " + std::to_string(size)); // Restore stack pointer after
+        return;
     }
 
     for (const auto& v : Logger::instance().m_vars) {

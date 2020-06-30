@@ -7,6 +7,11 @@
 
 #include <string>
 
+struct parsedArr {
+    std::string id;
+    std::string index;
+};
+
 class Node {
 public:
     Node();
@@ -16,6 +21,7 @@ public:
     void emit(std::string str);
     void aemit(std::string str);
     void aExprEmit(void* id, std::string statement);
+    parsedArr parseArray(std::string statement);
 
     void error(std::string str) const;
 

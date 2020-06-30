@@ -38,11 +38,42 @@ void Node::error(std::string str) const {
     Core::instance().dumpCore("interpreter has caused a core dump.");
 }
 
+parsedArr Node::parseArray(std::string statement) {
+    int i = 0;
+    std::string lhr;
+    std::string rhr;
+    bool nameSet = false;
+    for (; i < statement.size(); i++) {
+        if (statement[i] == ' ')
+            continue;
+
+        if (statement[i] == '[') {
+            nameSet = true;
+            continue;
+        }
+
+        if (statement[i] == ']')
+            break;
+
+        if (!nameSet) {
+            lhr += statement[i];
+        } else {
+            rhr += statement[i];
+        }
+    }
+
+    parsedArr a;
+    a.id = lhr;
+    a.index = rhr;
+
+    return a;
+}
+
 void Node::aExprEmit(void* id, std::string statement) {
     Id* m_id = (Id*)id;
 
     // Check if it's array
-    if (statement.find("]") != std::string::npos) {
+    /*if (statement.find("[") != std::string::npos) {
         Logger::instance().log("Interpreter", "it's an array!");
 
         int i = 0;
@@ -78,7 +109,7 @@ void Node::aExprEmit(void* id, std::string statement) {
         aemit("mov [" + m_id->toString() + "], ebx");
 
         return;
-    }
+    } */
 
     // Parse set
     std::string lhr;
@@ -118,7 +149,19 @@ void Node::aExprEmit(void* id, std::string statement) {
             Logger::instance().alog("and eax, 0xFFFFFFFE");
             Logger::instance().alog("mov [" + m_id->toString() + "], eax"); // place in place uwu
         } else if (isalpha(lhr[0])) {
-            Logger::instance().alog("mov eax, [" + lhr + "]");
+            // check if it's an array
+            if (lhr.find('[') != std::string::npos) {
+                parsedArr l = parseArray(lhr);
+
+                if (isalpha(lhr[0]))
+                    aemit("mov ecx, [" + l.index + "]");
+                else
+                    aemit("mov ecx, " + l.index);
+                aemit("mov eax, dword [" + l.id + " + ecx * " + std::to_string(m_id->type()->width()) + "]");
+            } else {
+                Logger::instance().alog("mov eax, [" + lhr + "]");
+            }
+
             Logger::instance().alog("mov [" + m_id->toString() + "], eax");
         } else if (lhr[0] == '-' && isalpha(lhr[1])) { // - with var
             lhr.erase(0, 1); // remove first char (-)
@@ -153,13 +196,30 @@ void Node::aExprEmit(void* id, std::string statement) {
         Logger::instance().alog("mov eax, " + lhr);
         Logger::instance().alog("mov ebx, [" + rhr + "]");
     } */else { // no t's
+        // Check if lhr is array
+        if (lhr.find('[') != std::string::npos) {
+            parsedArr l = parseArray(lhr);
 
-        if (isalpha(lhr[0]))
+            if (isalpha(rhr[0]))
+                aemit("mov ecx, [" + l.index + "]");
+            else
+                aemit("mov ecx, " + l.index);
+            aemit("mov eax, dword [" + l.id + " + ecx * " + std::to_string(m_id->type()->width()) + "]");
+        } else if (isalpha(lhr[0]))
             Logger::instance().alog("mov eax, [" + lhr + "]");
         else
             Logger::instance().alog("mov eax, " + lhr);
 
-        if (isalpha(rhr[0]))
+        // Check if rhr is array
+        if (rhr.find('[') != std::string::npos) {
+            parsedArr r = parseArray(rhr);
+
+            if (isalpha(rhr[0]))
+                aemit("mov ecx, [" + r.index + "]");
+            else
+                aemit("mov ecx, " + r.index);
+            aemit("mov ebx, dword [" + r.id + " + ecx * " + std::to_string(m_id->type()->width()) + "]");
+        } else if (isalpha(rhr[0]))
             Logger::instance().alog("mov ebx, [" + rhr + "]"); // is it var on numb
         else
             Logger::instance().alog("mov ebx, " + rhr);

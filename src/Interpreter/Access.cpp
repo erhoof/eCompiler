@@ -31,7 +31,7 @@ void Access::jumping(int t, int f) {
 }
 
 std::string Access::toString() {
-    std::string out = array()->toString() + " [ " + m_index->toString() + " ]";
+    std::string out = array()->toString() + " [ " + m_index->reduce()->toString() + " ]";
 
     return out;
 }
