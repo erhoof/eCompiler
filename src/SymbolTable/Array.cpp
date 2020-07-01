@@ -4,6 +4,7 @@
 
 #include "../../include/SymbolTable/Array.h"
 #include "../../include/Lexer/Tag.h"
+#include "../../include/Core/Core.h"
 
 Array::Array(int size, Type& type) : Type("[]", Tag::INDEX, size*(type.width())) {
     m_size = size;
@@ -17,6 +18,8 @@ std::string Array::toString() {
 }
 
 Type* Array::type() const {
+    if (this == nullptr)
+        Core::instance().dumpCore("type def error.");
     return m_type;
 }
 

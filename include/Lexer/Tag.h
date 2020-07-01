@@ -31,7 +31,9 @@ public:
         C_READ   = 290,
         C_WRITE  = 291,
         C_STRING = 292,
-        C_DQUOTE = 293
+        C_DQUOTE = 293,
+        C_VAR    = 294,
+        C_COLON  = 295
     };
 
     static int
@@ -58,7 +60,9 @@ public:
         READ,
         WRITE,
         STRING,
-        DQUOTE;
+        DQUOTE,
+        VAR,
+        COLON;
 };
 
 #endif //ECOMPILER_TAG_H

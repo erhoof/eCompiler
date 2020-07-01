@@ -24,6 +24,7 @@ Lexer::Lexer() {
     reserve(*(new Word("break",   Tag::BREAK)));
     reserve(*(new Word("read",    Tag::READ)));
     reserve(*(new Word("write",   Tag::WRITE)));
+    reserve(*(new Word("var",     Tag::VAR)));
 
     // Bools
     reserve(*WordTable::instance().w_true);

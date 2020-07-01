@@ -89,11 +89,20 @@ Statement* Parser::block() {
 }
 
 void Parser::declarations() {
-    while(m_look->tag() == Tag::BASIC) {
-        Type* t = type();
-        auto token = m_look;
+    while(m_look->tag() == Tag::VAR) {
 
+        //Type* t = type();
+        //auto token = m_look;
+
+        move();
+
+        auto token = m_look;
         match(Tag::ID);
+
+        match(':');
+
+        Type* t = type();
+
         match(';');
 
         //    Id(Word& id, Type& type, int offset);

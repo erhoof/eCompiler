@@ -74,6 +74,7 @@ void Logger::prepareASM() {
             out += std::to_string(m_var.size);
             alog(out);
         }
+
         for (auto& m_arr : m_arrays) {
             out = m_arr.name;
             out += " resb ";

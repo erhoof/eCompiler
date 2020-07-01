@@ -16,6 +16,7 @@ Temp::Temp(Type* type) : Expression(WordTable::instance().w_temp, type) {
     out += std::to_string(m_number);
     newVar.name = out;
     newVar.size = type->width();
+
     Logger::instance().m_vars.push_back(newVar);
 }
 

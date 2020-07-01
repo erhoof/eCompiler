@@ -11,9 +11,6 @@ Read::Read(Expression* x) {
 }
 
 void Read::gen(int b, int a) {
-    if (!Logger::instance().m_passages)
-        return;
-
     std::string formatString;
     if (m_expr->type() == TypeTable::instance().t_float)
         formatString = "fmtfi";
@@ -29,6 +26,10 @@ void Read::gen(int b, int a) {
     int size = 4 + m_expr->type()->width();
 
     Expression* ex = m_expr->gen();
+
+    if (!Logger::instance().m_passages)
+        return;
+
     std::string statement = ex->toString();
     emit("read: " + ex->toString());
 
@@ -63,11 +64,13 @@ void Read::gen(int b, int a) {
             aemit("mov eax, " + rhr);
 
         //aemit("mov ebx, dword [" + array()->toString() + " + ebx * " + std::to_string(s2e->type()->width())  + "]")
-        aemit("mov ebx, dword [" + lhr + " + eax * " + std::to_string(ex->type()->width()) + "]");
-        aemit("mov eax, ebx");
+        //aemit("mov ebx, [" + lhr + " + eax * " + std::to_string(ex->type()->width()) + "");
+        //       aemit("mov ebx, dword [" + lhr + " + eax * " + std::to_string(ex->type()->width()) + "]");
+        aemit("imul eax, " + std::to_string(ex->type()->width()));
+        aemit("add eax, " + lhr);
         aemit("push eax");
         aemit("push " + formatString);
-        aemit("call printf");
+        aemit("call scanf");
         aemit("add esp, " + std::to_string(size)); // Restore stack pointer after
     } else {
         aemit("mov eax, " + ex->toString());
